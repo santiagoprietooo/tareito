@@ -1,0 +1,1053 @@
+@font-face {  
+    font-family: 'Jurnal-Note';
+    src: url('./fonts/Jurnal-Note.otf') format('truetype');  
+    font-weight: normal;  
+    font-style: normal;  
+}
+
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    font-family: "Jurnal-Note";
+}
+
+::selection {
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #FCF4E9;
+}
+
+body {
+    background-color: #D8B885;
+}
+
+a, button, div {
+    -webkit-tap-highlight-color: transparent;
+    outline: none;
+}
+
+h1 {
+    font-size: 2rem;
+}
+h2 {
+    font-size: 1.5rem;
+}
+
+button {
+    cursor: pointer;
+}
+button:disabled {
+    cursor: not-allowed;
+}
+
+::-webkit-scrollbar {
+    width: 12px;
+    height: 8px;
+}
+::-webkit-scrollbar-thumb {
+    background: gray;
+    transition: background .3s ease-in-out;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: rgb(154, 154, 154);
+}
+::-webkit-scrollbar-track {
+    background: #222;
+}
+
+.wrap {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.div-forms {
+    width: 50%;
+    order: 1;
+}
+.div-forms h1 {
+    padding: 2rem;
+}
+
+.form-class {
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    gap: 1rem;
+    padding: 2rem;
+}
+.form-class div {
+    display: flex;
+    width: 100%;
+    gap: .3rem;
+}
+.form-class label {
+    font-size: 1.5rem;
+    width: max-content;
+}
+.form-class input {
+    height: 2.5rem;
+    padding: .3rem;
+    background-color: transparent;
+    color: rgba(0, 0, 0, 0.780);
+    font-size: 1.5rem;
+    border: 1.5px solid rgba(0, 0, 0, 0.275);
+    border-radius: .7rem;
+    outline: none;
+}
+.form-class button[type="submit"] {
+    margin-top: 1rem;
+}
+.form-class input:-webkit-autofill {
+    background-color: #D8B885 !important;
+    color: rgba(0, 0, 0, 0.650) !important;
+    transition: background-color 500000s ease-in-out 0s;
+}
+.form-class input:-webkit-autofill:focus {
+    background-color: #D8B885 !important;
+    color: rgba(0, 0, 0, 0.650) !important;
+}
+.form-class input:-webkit-autofill:hover {
+    background-color: #D8B885 !important;
+    color: rgba(0, 0, 0, 0.650) !important;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    gap: 1rem;
+    padding: 2rem;
+}
+.login-form div {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: .3rem;
+}
+.login-form label {
+    font-size: 1.5rem;
+    width: max-content;
+}
+.login-form input {
+    height: 2.5rem;
+    padding: .3rem;
+    background-color: transparent;
+    color: rgba(0, 0, 0, 0.780);
+    font-size: 1.5rem;
+    border: 1.5px solid rgba(0, 0, 0, 0.275);
+    border-radius: .7rem;
+    outline: none;
+}
+.login-form button[type="submit"] {
+    margin-top: 1rem;
+}
+.login-form input::placeholder {
+    color: rgba(0, 0, 0, 0.420);
+}
+.login-form input:-webkit-autofill {
+    background-color: #D8B885 !important;
+    color: rgba(0, 0, 0, 0.650) !important;
+    transition: background-color 500000s ease-in-out 0s;
+}
+.login-form input:-webkit-autofill:focus {
+    background-color: #D8B885 !important;
+    color: rgba(0, 0, 0, 0.650) !important;
+}
+.login-form input:-webkit-autofill:hover {
+    background-color: #D8B885 !important;
+    color: rgba(0, 0, 0, 0.650) !important;
+}
+
+.password-input {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+}
+.password-input div {
+    display: flex;
+    flex-direction: row !important;
+    align-items: center;
+    width: 100%;
+}
+.password-input div input {
+    width: 100%;
+    border-radius: .7rem;
+}
+.password-input div svg {
+    height: 1.5rem;
+    width: 1.5rem;
+}
+
+.form-class input::placeholder {
+    color: rgba(0, 0, 0, 0.350);
+}
+
+.login-p-method {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
+    padding: 2rem 2rem;
+}
+.login-p-method div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    gap: 1rem;
+}
+.login-p-method div hr {
+    width: 100%;
+    border: 1.5px solid rgba(0, 0, 0, 0.275);
+}
+.login-p-method div p {
+    min-width: fit-content;
+    color: rgba(0, 0, 0, 0.575);
+    font-size: 1.2rem;
+}
+.login-p-method form {
+    width: 100%;
+}
+.login-p-method button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+    width: 100%;
+    padding: .5rem 1rem;
+    background-color: transparent;
+    color: rgba(0, 0, 0, 0.650);
+    font-size: 1.5rem;
+    border-width: .1rem .375rem .350rem .1rem;
+    border-style: solid;
+    border-color: rgba(0, 0, 0, 0.575);
+    border-radius: .750rem;
+}
+.login-p-method button:active {
+    border: .185rem solid rgba(0, 0, 0, 0.625);
+}
+.login-p-method button:disabled {
+    border-color: rgba(0, 0, 0, 0.250);
+    border-width: .1rem .350rem .350rem .1rem;
+}
+.login-p-method img {
+    height: 1.5rem;
+    width: 1.5rem;
+}
+
+.redirect-to {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    color: rgba(0, 0, 0, 0.850);
+    font-size: 1.2rem;
+    text-align: center;
+}
+
+.task-setting {
+    position: relative;
+    flex-direction: unset !important;
+    width: max-content !important;
+}
+.task-settings {
+    position: relative;
+    flex-direction: row !important;
+    justify-content: space-between;
+}
+
+.default {
+    font-family: 'Jurnal-Note';
+}
+.arial {
+    font-family: Arial;
+}
+.roboto {
+    font-family: Roboto;
+}
+.calibri {
+    font-family: Calibri;
+}
+.monospace {
+    font-family: monospace;
+}
+.sans-serif {
+    font-family: sans-serif;
+}
+.times-new-roman {
+    font-family: 'Times New Roman';
+}
+
+.fixed-btn {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+}
+
+.create-btn-style {
+    padding: .6rem !important;
+    color: black !important;
+    background-color: #c3af8f !important;
+    box-shadow: 0 0 10px 1px black;
+}
+.create-btn-style svg {
+    height: 1.5rem !important;
+    width: 1.5rem !important;
+}
+
+.my-tasks {
+    position: relative;
+    order: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    width: 50%;
+    min-height: 100dvh;
+    max-height: 100dvh;
+    background-color: #FCF4E9;
+}
+.my-tasks header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 2rem;
+}
+
+.my-tasks header:has(select) {
+    flex-direction: column;
+    align-items: start;
+    gap: .5rem;
+}
+.my-tasks header:has(select) label {
+    color: rgba(0, 0, 0, 0.750);
+}
+select {
+    padding: .5rem;
+    background-color: #d7b17431;
+    font-size: 1rem;
+    border-width: 1.5px;
+    border-style: solid;
+    border-color: rgba(0, 0, 0, 0.250);
+    border-radius: .7rem;
+    outline: none;
+}
+select option:hover {
+    background-color: red !important;
+}
+
+.tasks-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    overflow-y: scroll;
+}
+.tasks-container article {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 2rem;
+}
+.tasks-container article form {
+    padding: 0;
+}
+
+.edit-task-btn-actions {
+    display: flex;
+    flex-direction: row !important;
+    align-items: center;
+    gap: .5rem;
+    width: max-content !important;
+}
+
+.task-to {
+    background-color: #ffedd5b5;
+}
+.task-to form {
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    gap: .5rem;
+    padding: 2rem 2rem 0;
+}
+.task-to form div {
+    display: flex;
+    flex-direction: column;
+    gap: .3rem;
+    width: 100%;
+}
+.task-to form div label {
+    font-size: 1.5rem;
+    width: max-content;
+}
+.task-to form div input {
+    height: 2.5rem;
+    padding: .3rem;
+    background-color: transparent;
+    color: rgba(0, 0, 0, 0.780);
+    font-size: 1.5rem;
+    border: 1.5px solid rgba(0, 0, 0, 0.275);
+    border-radius: .7rem;
+    outline: none;
+}
+
+.task-to-schedule-container {
+    position: relative;
+}
+.task-to-schedule-container button {
+    position: absolute;
+    top: 50%;
+    right: .5rem;
+    transform: translateY(-50%);
+    padding: .4rem 0 .4rem .4rem;
+    background-color: #FEEFDB;
+    color: rgba(0, 0, 0, 0.780);
+    border: 0;
+    border-radius: 0 1rem 1rem 0;
+    pointer-events: none;
+}
+
+.edit-task-div {
+    gap: 0 !important;
+}
+
+.task-to-btn-containter {
+    flex-direction: row !important;
+    width: max-content !important;
+    margin-top: 1.5rem;
+}
+
+.row {
+    flex-direction: row !important;
+    justify-content: space-between;
+    align-items: center !important;
+    gap: 2rem;
+    padding: 2rem !important;
+    cursor: pointer;
+}
+
+.selected-task {
+    background-color: #d7b17431;
+}
+
+.task-details {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    width: 100%;
+}
+
+.task-completed-btn {
+    background-color: transparent;
+    font-family: 'Jurnal-Note';
+    font-size: 1rem;
+    border: 0;
+}
+
+.task-confirm-container {
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    gap: 1rem;
+    width: 100%;
+}
+.task-confirm-container p {
+    color: orangered;
+    font-size: 1.2rem;
+}
+
+.task-btn-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    align-items: center;
+    gap: .5rem;
+    padding: 0;
+}
+.task-btn-container span:nth-child(2) {
+    font-weight: 700;
+    font-size: 1.5rem;
+}
+
+.task-delete-container {
+    position: fixed;
+    bottom: 0;
+    right: 12px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: .5rem;
+    width: calc(50% - 12px);
+    padding: 2rem;
+    background-color: #d1c3b1;
+    border-radius: 1rem 1rem 0 0;
+}
+.task-delete-container span {
+    font-size: 1.2rem;
+}
+.task-delete-container div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: .5rem;
+}
+
+.alert-message {
+    position: fixed;
+    bottom: 0;
+    width: 50%;
+    padding: 2rem;
+}
+.alert-message div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
+    padding: 2rem;
+    background-color: #bda174;
+    font-size: 1.3rem;
+    border-radius: 1rem;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.750);
+}
+
+.pb-5 {
+    padding-bottom: 10rem;
+}
+
+.pt-0 {
+    padding-top: 0;
+}
+
+.task-select-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: .2rem;
+    background-color: white;
+    border: 2px solid orangered;
+    border-radius: 10000px;
+}
+.task-select-btn svg {
+    height: 1rem;
+    width: 1rem;
+}
+
+.bg-click {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+
+.select-btn svg {
+    color: transparent;
+}
+.deselect-btn svg {
+    color: orangered;
+    fill: orangered;
+}
+
+.line-through {
+    text-decoration: line-through;
+}
+
+.py-5 {
+    padding-bottom: .5rem;
+}
+.p-top {
+    padding-top: 1.5rem !important;
+}
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}
+
+.loading-box {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 2rem;
+}
+.loading-box p {
+    font-size: 1.2rem;
+}
+
+.fade-enter-active, .fade-leave-active {
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+.fade-enter-from {
+    transform: translateY(-10%);
+    opacity: 0;
+}
+.fade-enter-to {
+    transform: translateY(0%);
+    opacity: 1;
+}
+.fade-leave-from {
+    transform: translateY(0%);
+    opacity: 1;
+}
+.fade-leave-to {
+    transform: translateY(-10%);
+    opacity: 0;
+}
+
+.task-create-appear-enter-active, .task-create-appear-leave-active {
+    transition: transform .3s ease, opacity 0.3s ease;
+}
+.task-create-appear-enter-from {
+    transform: translateY(-10%);
+    opacity: 0;
+}
+.task-create-appear-enter-to {
+    transform: translateY(0%);
+    opacity: 1;
+}
+.task-create-appear-leave-from {
+    transform: translateY(0%);
+    opacity: 1;
+}
+.task-create-appear-leave-to {
+    transform: translateY(-10%);
+    opacity: 0;
+}
+
+.fade-x-enter-active, .fade-x-leave-active {
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+.fade-x-enter-from {
+    transform: translateX(10%);
+    opacity: 0;
+}
+.fade-x-enter-to {
+    transform: translateX(0%);
+    opacity: 1;
+}
+.fade-x-leave-from {
+    transform: translateX(0%);
+    opacity: 1;
+}
+.fade-x-leave-to {
+    transform: translateX(10%);
+    opacity: 0;
+}
+
+.fade-y-enter-active, .fade-y-leave-active {
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+.fade-y-enter-from {
+    transform: translateY(10%);
+    opacity: 0;
+}
+.fade-y-enter-to {
+    transform: translateY(0%);
+    opacity: 1;
+}
+.fade-y-leave-from {
+    transform: translateY(0%);
+    opacity: 1;
+}
+.fade-y-leave-to {
+    transform: translateY(10%);
+    opacity: 0;
+}
+
+.opacity-enter-active, .opacity-leave-active {
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+.opacity-enter-from {
+    transform: translateY(-10%);
+    opacity: 0;
+}
+.opacity-enter-to {
+    transform: translateY(0%);
+    opacity: 1;
+}
+.opacity-leave-from {
+    transform: translateY(0%);
+    opacity: 1;
+}
+.opacity-leave-to {
+    transform: translateY(-10%);
+    opacity: 0;
+}
+
+@keyframes l3 {
+    0% {
+        inset: 0 35px 0 0;
+    }
+
+    50% {
+        inset: 0 0 0 0;
+    }
+
+    100% {
+        inset: 0 0 0 35px;
+    }
+}
+
+/*----------------------------------------------------------------------------------------------------------------*/
+
+@media (max-width: 768px) {
+    .wrap {
+        flex-direction: column;
+    }
+    .div-forms {
+        min-height: 100vh;
+        width: 100%;
+    }
+    .my-tasks {
+        min-height: 100dvh;
+        height: auto;
+        width: 100%;
+    }
+    .my-tasks header:has(select) select {
+        width: 100%;
+    }
+    .tasks-container {
+        padding-bottom: 5.5rem;
+        overflow-y: auto;
+    }
+    .alert-message {
+        width: 100%;
+        padding: 1rem;
+    }
+    .alert-message div {
+        padding: 1rem;
+        font-size: 1.3rem;
+    }
+    .task-delete-container {
+        position: fixed;
+        flex-direction: column;
+        gap: .750rem;
+        width: 100%;
+        padding: 1rem;
+    }
+    .task-delete-container span {
+        width: 100%;
+    }
+    .task-delete-container div {
+        align-items: center;
+        gap: 1rem;
+        padding-top: .750rem;
+        width: 100%;
+        border-top: 2px solid rgba(0, 0, 0, 0.350);
+    }
+    .task-delete-container div button[type="button"], .task-delete-container div form {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 50%;
+    }
+    .task-delete-container div form button {
+        justify-content: center;
+        width: 100%;
+    }
+
+    .created-at-span {
+        display: none;
+    }
+
+    .pb-5 {
+        padding-bottom: 8.5rem;
+    }
+}
+
+/*---------------------------------------------------------------------------------------------------------------*/
+section {
+    min-height: 100vh;
+    padding-top: 4rem;
+    background-color: #FCF4E9;
+}
+
+.notes-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem;
+    width: 100%;
+}
+.notes-header div {
+    width: 35%;
+}
+.notes-header div input {
+    padding: .3rem;
+    width: 100%;
+    background-color: #ffe6c4;
+    font-size: 1.5rem;
+    border: 0;
+    border-radius: .7rem;
+    outline: none;
+}
+
+.notes-container {
+    padding: 2rem;
+}
+
+.notes-display {
+    display: grid;
+    grid-template-columns: 25% 25% 25% 25%;
+    gap: 2rem;
+}
+
+.note-div-hover:hover {
+    background-color: rgba(0, 0, 0, 0.025);
+    border: 1.5px solid rgba(0, 0, 0, 0.75);
+    transition: .3s ease-in-out;
+}
+
+.note-div {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: 1rem;
+    padding: 1rem;
+    border: 1.5px solid rgba(0, 0, 0, 0.250);
+    border-radius: .7rem;
+}
+.note-div article {
+    display: flex;
+    align-items: end;
+    min-height: 2.5rem;
+    width: 100%;
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+    border-top: 1.5px solid rgba(0, 0, 0, 0.275);
+    border-bottom: 1.5px solid rgba(0, 0, 0, 0.275);
+    outline: none;
+}
+.note-div article:focus {
+    background-color: rgba(0, 0, 0, 0.075);
+    border-color: rgba(0, 0, 0, 0.75);
+}
+
+.note-span {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: .5rem;
+}
+.note-span svg, .note-span small {
+    color: #6B6763;
+}
+
+.note-info {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: .5rem;
+    width: 100%;
+}
+
+.options {
+    position: absolute;
+    z-index: 3;
+    top: 4.56rem;
+    right: 4rem;
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    background-color: #FCF4E9;
+    border-radius: 1rem 0 1rem 1rem;
+    box-shadow: 0 0 10px 1.5px black;
+}
+.options-btn {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
+    padding: 1rem;
+    background-color: transparent;
+    color: black;
+    font-size: 1.1rem;
+    text-decoration: none;
+    border: 0;
+}
+.options-btn:first-of-type:not(a) {
+    border-radius: 1rem 0 0 0;
+}
+.options a {
+    border-radius: 0 0 1rem 1rem;
+}
+.options-btn:hover {
+    background-color: #ffe6c4;
+}
+.options-btn:focus {
+    background-color: #ffe6c4;
+}
+
+.notes-modal-bg {
+    position: absolute;
+    z-index: 4;
+    top: 0;
+    bottom: 0;
+    min-height: 100vh;
+    height: 100%;
+    width: 100%;
+    margin-left: -2rem;
+    background-color: rgba(0, 0, 0, 0.345);
+}
+.notes-modal {
+    position: absolute;
+    z-index: 5;
+    right: 50%;
+    transform: translate(50%, 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    width: max-content;
+    background-color: white;
+    border-radius: 1rem;
+    box-shadow: 0 0 15px 2px black;
+}
+
+.translate-form {
+    min-width: 35%;
+    width: max-content;
+    transform: translate(50%, 70%);
+}
+
+.notes-modal p, .notes-modal label {
+    font-size: 1.5rem;
+}
+.notes-modal-first-div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    padding: 2rem;
+}
+
+.notes-modal-form {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+    padding: 2rem;
+}
+
+.notes-modal-edit-form {
+    display: flex;
+    flex-direction: column;
+    align-items: start !important;
+    width: 100%;
+    gap: 2rem;
+    padding: 0 2rem 2rem;
+}
+.notes-modal-edit-form div:has(input) {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: .5rem;
+    width: 100%;
+}
+.notes-modal-edit-form div:has(button) {
+    justify-content: end !important;
+    width: 100%;
+}
+.notes-modal-edit-form div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+}
+.notes-modal-edit-form div label {
+    width: 100%;
+}
+.notes-modal-edit-form div input {
+    padding: .8rem;
+    width: 100%;
+    background-color: #FEEFDB;
+    font-size: 1.2rem;
+    border: 0;
+    border-radius: .7rem;
+}
+
+.note-header {
+    position: fixed;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: 1rem;
+    padding: 1rem;
+    width: 100%;
+    background-color: #D8B885;
+    border-bottom: 1.5px solid rgba(0, 0, 0, 0.275);
+}
+.note-header div {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+.note-header ul {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+.note-header li {
+    padding: .5rem;
+    list-style: none;
+}
+.note-header input {
+    font-size: 1.1rem !important;
+}
+
+.container-for-note {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin: 8.470rem 0 1rem;
+}
+
+.form-for-note {
+    min-width: 50%;
+    padding: 0 !important;
+    background-color: #FCF4E9;
+}
+.note-style {
+    height: auto;
+    min-height: 100dvh;
+    width: 100%;
+    padding: 2rem;
+    background-color: transparent;
+    font-size: 1.5rem;
+    border: 0;
+    outline: none;
+    resize: none;
+    overflow: hidden;
+}
+
+.save-note-btn-style {
+    padding: .6rem !important;
+    color: black !important;
+    background-color: #FCF4E9 !important;
+    box-shadow: 0 0 10px 1px black;
+}
+.save-note-btn-style svg {
+    height: 1.5rem !important;
+    width: 1.5rem !important;
+}
