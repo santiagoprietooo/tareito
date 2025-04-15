@@ -706,6 +706,21 @@ select option:hover {
 /*----------------------------------------------------------------------------------------------------------------*/
 
 @media (max-width: 768px) {
+    ::-webkit-scrollbar {
+        width: 4px;
+        height: 4px;
+    }
+    ::-webkit-scrollbar-thumb {
+        background: gray;
+        transition: background .3s ease-in-out;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+        background: rgb(154, 154, 154);
+    }
+    ::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
     .wrap {
         flex-direction: column;
     }
