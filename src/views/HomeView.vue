@@ -174,7 +174,7 @@ const openEditTask = async (id) => {
 };
 
 const scheduleInEdit = ref(null);
-const fontInEdit = ref(null);
+const fontInEdit = ref(false);
 
 const toggleAddSchedule = () => {
     openTaskSettings.value = !openTaskSettings.value;
@@ -202,7 +202,7 @@ const submitEditedTask = async (id, title, isScheduled, font, completed) => {
         await editTaskByID(id, { title, isScheduled, font, completed });
         editTask.value = false;
         scheduleInEdit.value = null;
-        fontInEdit.value = null;
+        fontInEdit.value = false;
 
         alertMessage.value = `Se editó la tarea.`
 
@@ -430,7 +430,7 @@ function showNotification(title, scheduledTo) {
                         </Transition>
 
                         <div class="task-to-btn-containter">
-                            <SimpleButton @click="scheduleInEdit = null; editTask = null">
+                            <SimpleButton @click="scheduleInEdit = null; fontInEdit = !fontInEdit; editTask = null">
                                 Cancelar
                             </SimpleButton>
 
