@@ -57,13 +57,12 @@ onMounted(() => {
 });
 
 const typeOfFont = [
-    { font: 'Preestablecida',  class: 'default'         },
-    { font: 'Arial',           class: 'arial'           },
-    { font: 'Roboto',          class: 'roboto'          },
-    { font: 'Calibri',         class: 'calibri'         },
-    { font: 'Monospace',       class: 'monospace'       },
-    { font: 'Sans Serif',      class: 'sans-serif'      },
-    { font: 'Times New Roman', class: 'times-new-roman' }
+    { font: 'Preestablecida',           class: 'default'                   },
+    { font: 'Arial',                    class: 'arial'                     },
+    { font: 'Franklin Gothic Medium',   class: 'franklin-gothic-medium'    },
+    { font: 'Courier New',              class: 'courier-new'               },
+    { font: 'Monospace',                class: 'monospace'                 },
+    { font: 'Times New Roman',          class: 'times-new-roman'           }
 ];
 
 const openTaskSettings = ref(false);
@@ -362,7 +361,7 @@ function showNotification(title, scheduledTo) {
                             </FineBorderButton>
 
                             <FineBorderButton
-                                :class="{ 'active-2' : fontInEdit || taskDetails.font !== 'default' }"
+                                :class="{ 'active-2' : fontInEdit }"
                                 @click="fontInEdit = !fontInEdit"
                             >
                                 <template #sr-only>
@@ -415,7 +414,7 @@ function showNotification(title, scheduledTo) {
                         </Transition>
 
                         <Transition name="fade">
-                            <div v-if="fontInEdit || taskDetails.font !== 'default'" class="task-select-font pt-0">
+                            <div v-if="fontInEdit" class="task-select-font pt-0">
                                 <FineBorderButton
                                     v-for="font in typeOfFont"
                                     :class="[font.class, { 'active-2' : font.class === taskDetails.font }]"

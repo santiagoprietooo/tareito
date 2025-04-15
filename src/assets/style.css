@@ -264,17 +264,14 @@ button:disabled {
 .arial {
     font-family: Arial;
 }
-.roboto {
-    font-family: Roboto;
+.courier-new {
+    font-family: 'Courier New';
 }
-.calibri {
-    font-family: Calibri;
+.franklin-gothic-medium {
+    font-family: 'Franklin Gothic Medium';
 }
 .monospace {
     font-family: monospace;
-}
-.sans-serif {
-    font-family: sans-serif;
 }
 .times-new-roman {
     font-family: 'Times New Roman';
