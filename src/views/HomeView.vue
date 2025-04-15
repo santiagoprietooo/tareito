@@ -337,7 +337,7 @@ function showNotification(title, scheduledTo) {
                     </div>
 
                     <div v-if="editTask !== task.id" class="task-details">
-                        <TaskInfo infoType="title" :detail="task.title" :font="task.font"/>
+                        <TaskInfo infoType="title" :detail="task.title" :font="task.font" :isCompleted="task.completed"/>
                         <TaskInfo infoType="schedule" :scheduled="task.isScheduled" v-if="task.isScheduled"/>
                         <TaskInfo infoType="complete" :isCompleted="task.completed"/>
                         <TaskInfo :created="task.created_at"/>

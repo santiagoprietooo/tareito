@@ -71,6 +71,7 @@ defineProps({
         background-color: rgba(0, 0, 0, 0.575);
         color: #D8B885;
         border-color: transparent;
+        max-width: 100% !important;
     }
     .task-add-schedule .task-add-schedule-button {
         position: absolute;
