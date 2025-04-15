@@ -18,7 +18,7 @@
 }
 
 body {
-    background-color: #D8B885;
+    background-color: transparent;
 }
 
 a, button, div {
@@ -65,6 +65,7 @@ button:disabled {
 
 .div-forms {
     width: 50%;
+    background-color: #D8B885;
     order: 1;
 }
 .div-forms h1 {

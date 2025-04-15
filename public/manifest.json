@@ -1,0 +1,20 @@
+{
+  "theme_color":"#FCF4E9",
+  "background_color":"#FCF4E9",
+  "orientation":"portrait-primary",
+  "display":"standalone",
+  "dir":"auto",
+  "lang":"es-ES",
+  "name":"Tareín",
+  "short_name":"Tareín",
+  "start_url":"/",
+  "id": "/",
+  "description": "Creá y administrá tareas de la manera más sencilla a través de Tareín.",
+
+  "icons": [
+    {
+      "src": "/Icons/Tareín-fondo_transparente.png",
+      "sizes": "1024x1024"
+    }
+  ]
+}
