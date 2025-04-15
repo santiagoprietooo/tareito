@@ -754,6 +754,8 @@ select option:hover {
         gap: .750rem;
         width: 100%;
         padding: 1rem;
+        left: 0;
+        right: 0;
     }
     .task-delete-container span {
         width: 100%;

@@ -121,7 +121,7 @@ defineProps({
             grid-template-columns: repeat(2, 49%) !important;
         }
 
-        .task-add-schedule .task-add-schedule-button {
+        .task-add-schedule .task-add-schedule-button, .task-to-schedule-container button {
             display: none;
         }
     }
