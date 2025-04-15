@@ -398,6 +398,9 @@ select option:hover {
 .task-to-schedule-container {
     position: relative;
 }
+.task-to-schedule-container input {
+    max-width: 100% !important;
+}
 .task-to-schedule-container button {
     position: absolute;
     top: 50%;
