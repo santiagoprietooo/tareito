@@ -120,5 +120,9 @@ defineProps({
         .task-select-font {
             grid-template-columns: repeat(2, 49%) !important;
         }
+
+        .task-add-schedule .task-add-schedule-button {
+            display: none;
+        }
     }
 </style>
