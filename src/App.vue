@@ -15,7 +15,7 @@ const titles = {
 };
 
 watchEffect(() => {
-    title.value = !titles[route.path] ? "Cargando..." : `Notiphone ${titles[route.path]}` || "Error | Página no encontrada";
+    title.value = !titles[route.path] ? "Cargando..." : `Tareín ${titles[route.path]}` || "Error | Página no encontrada";
 });
 </script>
 
