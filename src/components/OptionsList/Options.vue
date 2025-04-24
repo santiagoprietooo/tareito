@@ -19,7 +19,7 @@
         align-items: center;
         gap: .5rem;
         width: 11.5rem;
-        padding: .5rem;
+        padding: .8rem .5rem;
         border-radius: .4rem 0 0;
         list-style-type: none;
         cursor: pointer;

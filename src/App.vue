@@ -1,17 +1,15 @@
 <script setup>
-/* import Navbar from "./components/Navbar.vue"; */
 import { watchEffect } from "vue";
 import { useRoute, RouterView } from "vue-router";
 import { useTitle } from "@vueuse/core";
 
 const route = useRoute();
-
 const title = useTitle();
+
 const titles = {
-    "/"        : " | Mis tareas",
-    /* "/notes"   : " | Mis notas", */
-    "/login"   : " | Crear cuenta",
-    "/sign-in" : " | Iniciar sesión"
+    "/"               : " | Mis tareas",
+    "/registro"       : " | Crear cuenta",
+    "/iniciar-sesion" : " | Iniciar sesión"
 };
 
 watchEffect(() => {
@@ -20,6 +18,5 @@ watchEffect(() => {
 </script>
 
 <template>
-    <!-- <Navbar v-if="route.path !== '/login' && route.path !== '/sign-in'"/> -->
     <RouterView />
 </template>

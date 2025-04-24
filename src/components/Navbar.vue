@@ -15,7 +15,7 @@ const handleLogout = async () => {
     try {
         await logout();
         openLogoutModal.value = false;
-        router.push("/sign-in");
+        router.push("/iniciar-sesion");
     } catch (error) {
         console.error("[HomeView.vue] - Error al cerrar sesión:", error);
         throw error;

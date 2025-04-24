@@ -8,16 +8,59 @@ import Options from "../components/OptionsList/Options.vue";
 import AddOptionForTask from "../components/AddOptionForTask.vue";
 import StylizedTextarea from "../components/StylizedTextarea.vue";
 import TaskInfo from "../components/TaskInfo.vue";
+import clickOutside from "../directives/clickOutside";
 import { Settings2, ChevronLeft, PenTool, AlarmClockIcon, TypeIcon, MoreVertical, XCircle, AlarmCheck, AlarmClockOff, Circle, X, Calendar1, Trash2, CircleCheckIcon, Pencil } from "lucide-vue-next";
-import { ref, onMounted } from "vue";
+import { ref, onMounted, watch } from "vue";
+import { useRouter } from "vue-router";
 import { useBreakpoints } from "@vueuse/core";
 import { addTask, getTasks, getTaskByID, deleteTaskByID, editTaskByID } from "../services/tasks-by-user";
 import { useLoggedUser } from "../composables/useLoggedUser";
 
 const { loggedUser } = useLoggedUser();
+
 const tasks = ref([]);
 const loadTasks = ref(false);
 const loading = ref(false);
+
+const router = useRouter();
+
+onMounted(() => {
+    if(loggedUser.value?.id) {
+        getTasks(loggedUser.value.id, (task) => { tasks.value = task; loadTasks.value = true });
+
+        if (Notification.permission !== 'granted') {
+            Notification.requestPermission();
+        }
+    } else {
+        router.push("/registro");
+    }
+
+    loadTasks.value = false;
+});
+
+const openTaskSettings = ref(false);
+function closeTaskOptions() {
+    openTaskSettings.value = false;
+}
+
+const openScheduleTask = ref(false);
+const openFontSelector = ref(false);
+
+const typeOfFont = [
+    { font: 'Preestablecida',           class: 'default'                   },
+    { font: 'Arial',                    class: 'arial'                     },
+    { font: 'Franklin Gothic Medium',   class: 'franklin-gothic-medium'    },
+    { font: 'Courier New',              class: 'courier-new'               },
+    { font: 'Monospace',                class: 'monospace'                 },
+    { font: 'Times New Roman',          class: 'times-new-roman'           }
+]
+
+const newTask = ref({
+    title: "",
+    isScheduled: null,
+    font: 'default',
+    completed: false
+});
 
 const order = ref('mas-reciente');
 function orderByNewest() {
@@ -46,36 +89,7 @@ function orderBy(event) {
     }
 }
 
-onMounted(() => {
-    if(loggedUser.value?.id) {
-        getTasks(loggedUser.value.id, (task) => { tasks.value = task; loadTasks.value = true });
-    } else {
-        console.error("El usuario no está autenticado.");
-    }
-
-    loadTasks.value = false;
-});
-
-const typeOfFont = [
-    { font: 'Preestablecida',           class: 'default'                   },
-    { font: 'Arial',                    class: 'arial'                     },
-    { font: 'Franklin Gothic Medium',   class: 'franklin-gothic-medium'    },
-    { font: 'Courier New',              class: 'courier-new'               },
-    { font: 'Monospace',                class: 'monospace'                 },
-    { font: 'Times New Roman',          class: 'times-new-roman'           }
-];
-
-const openTaskSettings = ref(false);
-const scheduleTask = ref(false);
-const openFontSelector = ref(false);
-
-const newTask = ref({
-    title: "",
-    isScheduled: null,
-    font: 'default',
-    completed: false
-});
-
+const notificationMessage = ref(null);
 const alertMessage = ref(null);
 
 const handleSubmit = async () => {
@@ -83,25 +97,30 @@ const handleSubmit = async () => {
     loading.value = true;
 
     try {
-        alertMessage.value = "";
+        await addTask({...newTask.value});
 
-        await addTask({ ...newTask.value });
+        if(newTask.value.isScheduled) {
+            scheduleNotification({...newTask.value});
+        }
 
-        alertMessage.value = "La tarea fue creada correctamente.";
+        notificationMessage.value = "La tarea fue creada correctamente.";
         setTimeout(() => {
-            alertMessage.value = "";
+            notificationMessage.value = "";
         }, 5000);
-        
+
+
         newTask.value = {
             title: "",
             isScheduled: null,
             font: 'default',
             completed: false
         };
-        
+
         order.value = "mas-reciente";
-        scheduleTask.value = false;
+
+        openScheduleTask.value = false;
         openFontSelector.value = false;
+
         createBtn.value = false;
     } catch (error) {
         console.error("[HomeView.vue] - Error al crear la tarea: ", error);
@@ -112,6 +131,9 @@ const handleSubmit = async () => {
 };
 
 const openTaskOptions = ref(false);
+function handleCloseTaskOptions() {
+    openTaskOptions.value = false;
+}
 
 const confirmDelete = ref(null);
 const openConfirmDelete = (id) => {
@@ -126,18 +148,18 @@ const enableSelectTasks = ref(false);
 const tasksToDelete = ref([]);
 const handleDeleteTasks = () => {
     tasksToDelete.value.forEach(async (task) => {
-        alertMessage.value = "";
+        notificationMessage.value = "";
 
         await deleteTaskByID(task);
 
         if(tasksToDelete.value.length === 1) {
-            alertMessage.value = `Se borró <strong>una</strong> tarea de tu lista.`;
+            notificationMessage.value = `Se borró <strong>una</strong> tarea de tu lista.`;
         } else if (tasksToDelete.value.length > 1) {
-            alertMessage.value = `Se borraron <strong>${tasksToDelete.value.length}</strong> tareas de tu lista.`;
+            notificationMessage.value = `Se borraron <strong>${tasksToDelete.value.length}</strong> tareas de tu lista.`;
         }
 
         setTimeout(() => {
-            alertMessage.value = "";
+            notificationMessage.value = "";
             tasksToDelete.value.length = 0;
         }, 5000);
     });
@@ -147,16 +169,14 @@ const handleDeleteTasks = () => {
 }
 
 const deletedTaskMessage = (title) => {
-    alertMessage.value = "";
-
     if(title.length > 35) {
         title = title.slice(0, 35) + "...";
     }
 
-    alertMessage.value = `Se borró <strong>"${title}"</strong> de tu lista de tareas.`
+    notificationMessage.value = `Se borró <strong>"${title}"</strong> de tu lista de tareas.`
 
     setTimeout(() => {
-        alertMessage.value = null;
+        notificationMessage.value = null;
     }, 5000);
 }
 
@@ -178,7 +198,7 @@ const fontInEdit = ref(false);
 
 const toggleAddSchedule = () => {
     openTaskSettings.value = !openTaskSettings.value;
-    scheduleTask.value = !scheduleTask.value;
+    openScheduleTask.value = !openScheduleTask.value;
     newTask.value.isScheduled = null;
 }
 const toggleSchedule = (id) => {
@@ -197,17 +217,17 @@ const toggleEditFont = () => {
 }
 const submitEditedTask = async (id, title, isScheduled, font, completed) => {
     try {
-        alertMessage.value = "";
+        notificationMessage.value = "";
 
         await editTaskByID(id, { title, isScheduled, font, completed });
         editTask.value = false;
         scheduleInEdit.value = null;
         fontInEdit.value = false;
 
-        alertMessage.value = `Se editó la tarea.`
+        notificationMessage.value = `Se editó la tarea.`
 
         setTimeout(() => {
-            alertMessage.value = null;
+            notificationMessage.value = null;
         }, 5000);
     } catch (error) {
         console.error(`[HomeView.vue] - Error al querer editar la tarea con ID ${id}.`, error);
@@ -223,32 +243,68 @@ const createBtn = ref(false);
 const returnBtnForDevices = () => {
     createBtn.value = !createBtn.value;
     openTaskSettings.value = false;
-    scheduleTask.value = false;
+    openScheduleTask.value = false;
     openFontSelector.value = false;
     newTask.value.title = '';
     newTask.value.font = 'default';
 }
 
-if(Notification.permission === "default") {
-    Notification.requestPermission()
-    .then(permission => {
-        console.log("Notificaciones: ", permission);
-    });
-}
-function showNotification(title, scheduledTo) {
-    const now = Date.now();
-    const delay = scheduledTo - now;
+const notifiedTasksIDs = ref(new Set());
 
-    if(delay > 0) {
-        setTimeout(() => {
-            if (Notification.permission === "granted") {
-                new Notification(title);
+function showNotification(title) {
+    if (Notification.permission === 'granted') {
+        new Notification(title, {
+            body: "Tenés una tarea programada para esta hora.",
+            icon: "/public/icons/Tareín-fondo_blanco.jpg",
+            badge: "/public/icons/Tareín-fondo_blanco.jpg",
+            lang: "es-ES",
+            data: {
+                url: "/",
+            },
+            silent: false,
+            vibrate: [200, 100, 200],
+            requireInteraction: false}).onclick = (event) => {
+                event.preventDefault();
+                window.focus();
+                window.location.href = event.target.data.url;
             }
+    } else {
+        console.warn("Permiso de notificación no concedido.");
+    }
+}
+
+function scheduleNotification(task) {
+    const scheduledTime = new Date(task.isScheduled);
+    if (isNaN(scheduledTime)) {
+        console.error("Fecha inválida para la tarea:", task.isScheduled);
+        return;
+    }
+
+    const now = Date.now();
+    const delay = scheduledTime - now;
+
+    console.log(`Programando notificación para "${task.title}" en ${delay} ms`);
+
+    if (delay > 0) {
+        setTimeout(() => {
+            showNotification(task.title);
+            notifiedTasksIDs.value.add(task.id);
         }, delay);
-    } else if(now > scheduledTo){
+    } else {
         console.error("La tarea caducó.");
     }
 }
+
+scheduleNotification({ title: "Tarea de prueba", isScheduled: new Date(Date.now() + 5000), font: "default", id: 1 });
+
+watch(tasks, (newTasks) => {
+    console.log("Tareas actualizadas:", newTasks);
+    newTasks.forEach((task) => {
+        if (!notifiedTasksIDs.value.has(task.id)) {
+            scheduleNotification(task);
+        }
+    });
+}, { immediate: true });
 </script>
 
 <template>
@@ -260,7 +316,7 @@ function showNotification(title, scheduledTo) {
                 <div v-if="tasks.length > 0 && enableSelectTasks == false" class="task-settings task-settings-bg">
                     <FineBorderButton
                         :class="{ 'active-2' : openTaskOptions }"
-                        @click="
+                        @click.stop="
                             openTaskOptions = !openTaskOptions;
                             editTask = null;
                             confirmDelete = null
@@ -277,7 +333,7 @@ function showNotification(title, scheduledTo) {
                     <Transition name="fade-x">
                         <OptionsList
                             v-if="openTaskOptions"
-                            @mouseleave="openTaskOptions = false"
+                            v-click-outside="handleCloseTaskOptions"
                         >
                             <Options
                                 @click="enableSelectTasks = true"
@@ -530,11 +586,11 @@ function showNotification(title, scheduledTo) {
             </div>
 
             <Transition name="fade-y">
-                <div v-if="alertMessage" class="alert-message">
+                <div v-if="notificationMessage" class="alert-message">
                     <div>
-                        <p v-html="alertMessage"/>
+                        <p v-html="notificationMessage"/>
 
-                        <FineBorderButton @click="alertMessage = null">
+                        <FineBorderButton @click="notificationMessage = null">
                             <template #sr-only>
                                 Cerrar mensaje
                             </template>
@@ -547,7 +603,7 @@ function showNotification(title, scheduledTo) {
 
             <Transition name="fade-y">
                 <FineBorderButton
-                    v-if="devices && !createBtn && !enableSelectTasks && !editTask && !confirmDelete && !alertMessage"
+                    v-if="devices && !createBtn && !enableSelectTasks && !editTask && !confirmDelete && !notificationMessage"
                     class="fixed-btn create-btn-style"
                     @click="createBtn = !createBtn"
                 >
@@ -576,7 +632,7 @@ function showNotification(title, scheduledTo) {
                             <ChevronLeft />
                         </FineBorderButton>
 
-                        <FineBorderButton @click="openTaskSettings = !openTaskSettings" :class="{ 'active' : openTaskSettings }">
+                        <FineBorderButton @click.stop="openTaskSettings = !openTaskSettings" :class="{ 'active' : openTaskSettings }">
                             <template #sr-only>
                                 {{ openTaskSettings ? 'Cerrar configuración de tareas' : 'Abrir configuración de tareas' }}
                             </template>
@@ -588,7 +644,7 @@ function showNotification(title, scheduledTo) {
                         <Transition name="fade-x">
                             <OptionsList
                                 v-if="openTaskSettings"
-                                @mouseleave="openTaskSettings = false"
+                                v-click-outside="closeTaskOptions"
                             >
                                 <Options
                                     @click="toggleAddSchedule"
@@ -596,7 +652,7 @@ function showNotification(title, scheduledTo) {
                                     @keydown.esc="openTaskSettings = false"
                                 >
                                     <AlarmClockIcon />
-                                    <span>{{ scheduleTask ? "Cerrar" : "Programar tarea" }}</span>
+                                    <span>{{ openScheduleTask ? "Cerrar" : "Programar tarea" }}</span>
                                 </Options>
 
                                 <Options
@@ -621,7 +677,7 @@ function showNotification(title, scheduledTo) {
                     />
 
                     <Transition name="fade">
-                        <AddOptionForTask v-if="scheduleTask" option="schedule" labelFor="task-program" @close-option:close="$emit('close-option:close', $event)" v-model="scheduleTask">
+                        <AddOptionForTask v-if="openScheduleTask" option="schedule" labelFor="task-program" @close-option:close="$emit('close-option:close', $event)" v-model="openScheduleTask">
                             <input
                                 type="datetime-local"
                                 name="task-program"
@@ -660,3 +716,11 @@ function showNotification(title, scheduledTo) {
         </Transition>
     </div>
 </template>
+
+<script>
+export default {
+    directives: {
+        clickOutside
+    }
+}
+</script>

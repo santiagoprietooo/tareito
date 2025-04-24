@@ -71,7 +71,7 @@ const handleSubmit = async () => {
         </div>
     </form>
 
-    <RouterLink to="/login">
+    <RouterLink to="/registro">
         ¿No tenés una cuenta? Registrate acá.
     </RouterLink>
 </template>

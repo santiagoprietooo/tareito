@@ -126,7 +126,7 @@ const openGooglePopup = async () => {
                     </button>
                 </form>
 
-                <RouterLink to="/sign-in" class="redirect-to">
+                <RouterLink to="/iniciar-sesion" class="redirect-to">
                     ¿Ya tenés una cuenta? Iniciá sesión acá.
                 </RouterLink>
             </div>
