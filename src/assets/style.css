@@ -297,6 +297,23 @@ button:disabled {
     width: 1.5rem !important;
 }
 
+.logout-btn {
+    background-color: rgba(0, 0, 0, .575);
+    color: #FCF4E9 !important;
+    border-color: #FCF4E9 !important;
+}
+
+.no-tasks {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+.no-tasks img {
+    height: 12rem;
+    width: 12rem;
+}
+
 .my-tasks {
     position: relative;
     order: 2;
@@ -317,11 +334,6 @@ button:disabled {
     padding: 2rem;
 }
 
-.my-tasks header:has(select) {
-    flex-direction: column;
-    align-items: start;
-    gap: .5rem;
-}
 .my-tasks header:has(select) label {
     color: rgba(0, 0, 0, 0.750);
 }
@@ -345,6 +357,23 @@ select option:hover {
     width: 100%;
     overflow-y: scroll;
 }
+
+.tasks-container header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    width: 100%;
+}
+
+.task-select {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: .5rem;
+}
+
 .tasks-container article {
     position: relative;
     display: flex;

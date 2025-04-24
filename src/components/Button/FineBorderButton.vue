@@ -15,7 +15,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: .5rem;
+    padding: .7rem;
     background-color: transparent;
     color: rgba(0, 0, 0, 0.575);
     font-size: 1rem;

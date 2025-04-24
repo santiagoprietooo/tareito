@@ -9,12 +9,13 @@ import AddOptionForTask from "../components/AddOptionForTask.vue";
 import StylizedTextarea from "../components/StylizedTextarea.vue";
 import TaskInfo from "../components/TaskInfo.vue";
 import clickOutside from "../directives/clickOutside";
-import { Settings2, ChevronLeft, PenTool, AlarmClockIcon, TypeIcon, MoreVertical, XCircle, AlarmCheck, AlarmClockOff, Circle, X, Calendar1, Trash2, CircleCheckIcon, Pencil } from "lucide-vue-next";
+import { Settings2, ChevronLeft, PenTool, AlarmClockIcon, TypeIcon, MoreVertical, XCircle, AlarmCheck, AlarmClockOff, Circle, X, Calendar1, Trash2, CircleCheckIcon, Pencil, LogOut } from "lucide-vue-next";
 import { ref, onMounted, watch } from "vue";
 import { useRouter } from "vue-router";
 import { useBreakpoints } from "@vueuse/core";
 import { addTask, getTasks, getTaskByID, deleteTaskByID, editTaskByID } from "../services/tasks-by-user";
 import { useLoggedUser } from "../composables/useLoggedUser";
+import { logout } from "../services/auth";
 
 const { loggedUser } = useLoggedUser();
 
@@ -313,55 +314,65 @@ watch(tasks, (newTasks) => {
             <header>
                 <h1>Mis tareas</h1>
 
-                <div v-if="tasks.length > 0 && enableSelectTasks == false" class="task-settings task-settings-bg">
-                    <FineBorderButton
-                        :class="{ 'active-2' : openTaskOptions }"
-                        @click.stop="
-                            openTaskOptions = !openTaskOptions;
-                            editTask = null;
-                            confirmDelete = null
-                        "
-                    >
-                        <template #sr-only>
-                            {{ openTaskOptions ? 'Cerrar opciones de tareas' : 'Abrir opciones de tareas' }}
-                        </template>
+                <FineBorderButton @click="logout" class="logout-btn">
+                    <template #sr-only>
+                        Cerrar sesión
+                    </template>
 
-                        <MoreVertical v-if="!openTaskOptions"/>
-                        <X v-else/>
-                    </FineBorderButton>
-
-                    <Transition name="fade-x">
-                        <OptionsList
-                            v-if="openTaskOptions"
-                            v-click-outside="handleCloseTaskOptions"
-                        >
-                            <Options
-                                @click="enableSelectTasks = true"
-                                @keydown.enter="enableSelectTasks = true"
-                                @keydown.esc="openTaskOptions = false"
-                            >
-                                <Trash2 />
-                                <span>Borrar tareas</span>
-                            </Options>
-                        </OptionsList>
-                    </Transition>
-                </div>
+                    <LogOut />
+                </FineBorderButton>
             </header>
 
             <div v-if="tasks.length > 0" class="tasks-container" :class="{ 'pb-5' : enableSelectTasks }">
                 <header>
-                    <label for="order-by"><b>Ordenar por:</b></label>
-                    <select
-                        name="order-by"
-                        id="order-by"
-                        v-model="order"
-                        @change="orderBy"
-                    >
-                        <option value="mas-reciente">Fecha de creación: Más reciente a más antigua.</option>
-                        <option value="mas-antigua">Fecha de creación: Más antigua a más reciente.</option>
-                        <option value="a-z">Orden alfabético: De la A - Z.</option>
-                        <option value="z-a">Orden alfabético: De la Z - A.</option>
-                    </select>
+                    <div class="task-select">
+                        <label for="order-by"><b>Ordenar por:</b></label>
+                        <select
+                            name="order-by"
+                            id="order-by"
+                            v-model="order"
+                            @change="orderBy"
+                        >
+                            <option value="mas-reciente">Fecha de creación: Más reciente a más antigua.</option>
+                            <option value="mas-antigua">Fecha de creación: Más antigua a más reciente.</option>
+                            <option value="a-z">Orden alfabético: De la A - Z.</option>
+                            <option value="z-a">Orden alfabético: De la Z - A.</option>
+                        </select>
+                    </div>
+
+                    <div v-if="tasks.length > 0 && enableSelectTasks == false" class="task-settings task-settings-bg">
+                        <FineBorderButton
+                            :class="{ 'active-2' : openTaskOptions }"
+                            @click.stop="
+                                openTaskOptions = !openTaskOptions;
+                                editTask = null;
+                                confirmDelete = null
+                            "
+                        >
+                            <template #sr-only>
+                                {{ openTaskOptions ? 'Cerrar opciones de tareas' : 'Abrir opciones de tareas' }}
+                            </template>
+
+                            <MoreVertical v-if="!openTaskOptions"/>
+                            <X v-else/>
+                        </FineBorderButton>
+
+                        <Transition name="fade-x">
+                            <OptionsList
+                                v-if="openTaskOptions"
+                                v-click-outside="handleCloseTaskOptions"
+                            >
+                                <Options
+                                    @click="enableSelectTasks = true"
+                                    @keydown.enter="enableSelectTasks = true"
+                                    @keydown.esc="openTaskOptions = false"
+                                >
+                                    <Trash2 />
+                                    <span>Borrar tareas</span>
+                                </Options>
+                            </OptionsList>
+                        </Transition>
+                    </div>
                 </header>
 
                 <article
@@ -582,7 +593,14 @@ watch(tasks, (newTasks) => {
             <div v-else class="loading-box">
                 <Loader v-if="!loadTasks"/>
 
-                <p v-else>No hay tareas creadas.</p>
+                <div v-else class="no-tasks">
+                    <img src="/Icons/Tareín_duditativo-fondo_transparente.png" alt="Tareito dudando">
+                    <p>
+                        No creaste ninguna tarea todavía. <br>
+                        <span v-if="devices">Podés crear una <strong>presionando el botón de abajo a la derecha</strong>.</span>
+                        <span v-else>Podés crear una <strong>completando el campo a tu izquierda</strong>.</span>
+                    </p>
+                </div>
             </div>
 
             <Transition name="fade-y">
@@ -712,6 +730,7 @@ watch(tasks, (newTasks) => {
                         {{ loading ? "Creando..." : "Crear tarea" }}
                     </RoundableButton>
                 </form>
+
             </div>
         </Transition>
     </div>
