@@ -255,8 +255,8 @@ function showNotification(title) {
     if (Notification.permission === 'granted') {
         new Notification(title, {
             body: "Tenés una tarea programada para esta hora.",
-            icon: "/public/icons/Tareín-fondo_blanco.jpg",
-            badge: "/public/icons/Tareín-fondo_blanco.jpg",
+            icon: "/icons/Tareín-fondo_blanco.jpg",
+            badge: "/icons/Tareín-fondo_blanco.jpg",
             lang: "es-ES",
             data: {
                 url: "/",
