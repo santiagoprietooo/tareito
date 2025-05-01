@@ -64,6 +64,8 @@ button:disabled {
 }
 
 .div-forms {
+    height: 100%;
+    min-height: 100dvh;
     width: 50%;
     background-color: #D8B885;
     order: 1;
@@ -115,6 +117,10 @@ button:disabled {
     color: rgba(0, 0, 0, 0.650) !important;
 }
 
+.div-forms-p {
+    padding: 0 2rem;
+}
+
 .login-form {
     display: flex;
     flex-direction: column;
@@ -122,64 +128,8 @@ button:disabled {
     gap: 1rem;
     padding: 2rem;
 }
-.login-form div {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    gap: .3rem;
-}
-.login-form label {
-    font-size: 1.5rem;
-    width: max-content;
-}
-.login-form input {
-    height: 2.5rem;
-    padding: .3rem;
-    background-color: transparent;
-    color: rgba(0, 0, 0, 0.780);
-    font-size: 1.5rem;
-    border: 1.5px solid rgba(0, 0, 0, 0.275);
-    border-radius: .7rem;
-    outline: none;
-}
 .login-form button[type="submit"] {
     margin-top: 1rem;
-}
-.login-form input::placeholder {
-    color: rgba(0, 0, 0, 0.420);
-}
-.login-form input:-webkit-autofill {
-    background-color: #D8B885 !important;
-    color: rgba(0, 0, 0, 0.650) !important;
-    transition: background-color 500000s ease-in-out 0s;
-}
-.login-form input:-webkit-autofill:focus {
-    background-color: #D8B885 !important;
-    color: rgba(0, 0, 0, 0.650) !important;
-}
-.login-form input:-webkit-autofill:hover {
-    background-color: #D8B885 !important;
-    color: rgba(0, 0, 0, 0.650) !important;
-}
-
-.password-input {
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-}
-.password-input div {
-    display: flex;
-    flex-direction: row !important;
-    align-items: center;
-    width: 100%;
-}
-.password-input div input {
-    width: 100%;
-    border-radius: .7rem;
-}
-.password-input div svg {
-    height: 1.5rem;
-    width: 1.5rem;
 }
 
 .form-class input::placeholder {
@@ -241,12 +191,13 @@ button:disabled {
 }
 
 .redirect-to {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
     color: rgba(0, 0, 0, 0.850);
     font-size: 1.2rem;
     text-align: center;
+    text-decoration: none;
+}
+.redirect-to a {
+    color: rgba(0, 0, 0, 0.850);
 }
 
 .task-setting {
@@ -588,6 +539,10 @@ select option:hover {
 
 .line-through {
     text-decoration: line-through;
+}
+
+.correct-btn-p {
+    padding: .5rem !important;
 }
 
 .py-5 {

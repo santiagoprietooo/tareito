@@ -1,5 +1,5 @@
 <script setup>
-import { MailWarning, LockKeyholeIcon } from 'lucide-vue-next';
+import { MailWarning, MailQuestionIcon, LockKeyholeIcon } from 'lucide-vue-next';
 
 defineProps({
     icon: {
@@ -11,8 +11,9 @@ defineProps({
 
 <template>
     <span class="input-warning">
-        <MailWarning     class="hidden" :class="{ 'block' : icon == 'email' }" />
-        <LockKeyholeIcon class="hidden" :class="{ 'block' : icon == 'password' }" />
+        <MailWarning          class="hidden" :class="{ 'block' : icon == 'email' }" />
+        <MailQuestionIcon     class="hidden" :class="{ 'block' : icon == 'email-length' }" />
+        <LockKeyholeIcon      class="hidden" :class="{ 'block' : icon == 'password' }" />
         <p><slot/></p>
     </span>
 </template>
@@ -23,14 +24,14 @@ defineProps({
     flex-direction: row;
     align-items: center;
     gap: .5rem;
-    padding: .5rem;
-    color: orangered;
+    padding: .5rem 0;
+    color: red;
+    font-size: 1.1rem;
     font-weight: 500;
 }
 svg {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    height: 1.1rem;
+    width: 1.1rem;
 }
 
 .hidden {

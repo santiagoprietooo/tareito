@@ -37,33 +37,9 @@ onAuthStateChanged(auth, async user => {
 /**
  * 
  * @param {{ displayName: string, email: string, password: string }} userData
- * @param {{ emailError: boolean, passwordError: boolean }} errors
  */
-export async function createUser({ displayName, email, password }, errors) {
+export async function createUser({ displayName, email, password }) {
     const user = collection(db, "users");
-    const userQuery = query(user, where("email", "==", email));
-    const querySnapshot = await getDocs(userQuery);
-
-    if(!querySnapshot.empty && password.length < 6) {
-        console.error("[auth.js] - El email ya existe.");
-        console.error("[auth.js] - La contraseña debe tener al menos 6 carácteres.");
-        errors.emailError = true;
-        errors.passwordError = true;
-        return;
-    } else if(!querySnapshot.empty) {
-        console.error("[auth.js] - El email ya existe.");
-        errors.emailError = true;
-        errors.passwordError = false;
-        return;
-    } else if(password.length < 6) {
-        console.error("[auth.js] - La contraseña debe tener al menos 6 carácteres.");
-        errors.emailError = false;
-        errors.passwordError = true;
-        return;
-    } else {
-        errors.emailError = false;
-        errors.passwordError = false;
-    }
 
     try {
         const newUser = await createUserWithEmailAndPassword(auth, email, password);

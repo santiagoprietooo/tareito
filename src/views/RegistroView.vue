@@ -1,8 +1,6 @@
 <script setup>
-import FineBorderButton from '../components/Button/FineBorderButton.vue';
+import FormField from '../components/FormField.vue';
 import RoundableButton from '../components/Button/RoundableButton.vue';
-import InputWarning from '../components/InputWarning.vue';
-import { Eye, EyeClosed } from 'lucide-vue-next';
 import { ref } from 'vue';
 import { useRouter, RouterLink } from 'vue-router';
 import { createUser, signInWithGoogle } from '../services/auth';
@@ -13,10 +11,9 @@ const newUser = ref({
     password: ""
 });
 
-const toggleShowPassword = ref(false);
 const loading = ref(false);
 const router = useRouter();
-const errors = ref({ emailError: false, passwordError: false });
+const errors = ref({ emailError: false, emailLengthError: false, passwordError: false });
 
 const handleSubmit = async () => {
     if(loading.value) return;
@@ -25,15 +22,21 @@ const handleSubmit = async () => {
     try {
         await createUser({ ...newUser.value }, errors.value);
 
-        if(errors.value.emailError) {
-            loading.value = false;
-            return;
-        }
-
         router.push("/");
     } catch (error) {
         loading.value = false;
-        console.error("[LoginView.vue] - Error al crear la cuenta:", error);
+
+        if(error.code === "auth/email-already-in-use") {
+            errors.value.emailError = true;
+        }
+
+        if(error.code === "auth/invalid-email") {
+            errors.value.emailLengthError = true;
+        }
+        
+        if(error.code === "auth/weak-password") {
+            errors.value.passwordError = true;
+        }
     }
 
     loading.value = false;
@@ -52,62 +55,38 @@ const openGooglePopup = async () => {
 
 <template>
     <div class="wrap">
-        <div class="div-forms pt-0">
+        <div class="div-forms">
             <h1>Registrarse</h1>
 
+            <p class="div-forms-p">Los campos marcados con * son obligatorios para poder crear una cuenta.</p>
+
             <form @submit.prevent="handleSubmit" class="login-form">
-                <div>
-                    <label for="displayName"><b>Nombre:</b></label>
-                    <input
-                        id="displayName"
-                        name="displayName"
-                        type="text"
-                        autocomplete="on"
-                        v-model="newUser.displayName"
-                        placeholder="Juan Pérez"
-                    />
-                </div>
+                <FormField
+                    useFor="displayName"
+                    title="Nombre y apellido"
+                    type="text"
+                    placeholder="Juan Pérez"
+                    autocomplete="on"
+                    v-model="newUser.displayName"
+                />
 
-                <div>
-                    <label for="email"><b>Correo electrónico:</b></label>
-                    <input
-                        id="email"
-                        name="email"
-                        type="email"
-                        autocomplete="on"
-                        v-model="newUser.email"
-                        placeholder="ejemplo@gmail.com"
-                    />
-                    <InputWarning v-if="errors.emailError == true">El email ya se encuentra en uso, pruebe con otro.</InputWarning>
-                </div>
+                <FormField
+                    useFor="email"
+                    title="Correo electrónico *"
+                    type="email"
+                    placeholder="ejemplo@gmail.com"
+                    autocomplete="on"
+                    v-model="newUser.email"
+                />
 
-                <div class="password-input">
-                    <label for="password"><b>Contraseña:</b></label>
-                    <div>
-                        <input
-                            id="password"
-                            name="password"
-                            :type="!toggleShowPassword ? 'password' : 'text'"
-                            v-model="newUser.password"
-                            placeholder="Contraseña$10"
-                        />
-
-                        <FineBorderButton
-                            @click="toggleShowPassword = !toggleShowPassword"
-                            :class="{'active' : toggleShowPassword}"
-                        >
-                            <template #sr-only>{{ !toggleShowPassword ? "Mostrar contraseña" : "Ocultar contraseña" }} </template>
-                            <Eye v-if="!toggleShowPassword"/>
-                            <EyeClosed v-else/>
-                        </FineBorderButton>
-                    </div>
-                    <InputWarning
-                        icon="password"
-                        v-if="errors.passwordError == true"
-                    >
-                        La contraseña debe tener al menos seis carácteres.
-                    </InputWarning>
-                </div>
+                <FormField
+                    useFor="password"
+                    title="Contraseña *"
+                    type="password"
+                    placeholder="Contraseña$10"
+                    autocomplete="off"
+                    v-model="newUser.password"
+                />
 
                 <RoundableButton :disabled="!newUser.email || !newUser.password">
                     {{ !loading ? "Crear cuenta" : "Creando cuenta..." }}
@@ -116,19 +95,21 @@ const openGooglePopup = async () => {
 
             <div class="login-p-method">
                 <div>
-                    <hr> <p>o podés registrarte desde <span><b>:</b></span></p> <hr>
+                    <hr>
+                    <p>o podés registrarte desde <span><b>:</b></span></p>
+                    <hr>
                 </div>
 
-                <form action="" @submit.prevent="openGooglePopup">
+                <form action="#" @submit.prevent="openGooglePopup">
                     <button type="submit">
                         <img src="/Icons/google.png" alt="Logo de Google">
                         <span>Ingresar con Google</span>
                     </button>
                 </form>
 
-                <RouterLink to="/iniciar-sesion" class="redirect-to">
-                    ¿Ya tenés una cuenta? Iniciá sesión acá.
-                </RouterLink>
+                <p class="redirect-to">
+                    ¿Ya tenés una cuenta? <RouterLink to="/iniciar-sesion">Iniciá sesión acá.</RouterLink>
+                </p>
             </div>
         </div>
     </div>
