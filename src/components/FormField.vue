@@ -1,6 +1,5 @@
 <script setup>
 import FineBorderButton from './Button/FineBorderButton.vue';
-import InputWarning from './InputWarning.vue';
 import { ref } from 'vue';
 import { Eye, EyeClosed } from 'lucide-vue-next';
 
@@ -14,7 +13,7 @@ defineProps({
     autocomplete: String
 });
 
-defineEmits('value:inputValue');
+defineEmits('inputValue');
 const inputValue = defineModel();
 </script>
 
@@ -52,17 +51,7 @@ const inputValue = defineModel();
             </FineBorderButton>
         </div>
 
-        <!--
-            <InputWarning v-if="errors.emailError">El email ya se encuentra en uso, pruebe con otro.</InputWarning>
-
-            <InputWarning v-if="errors.emailLengthError" icon="email-length">
-                Este no es un correo electrónico válido.
-            </InputWarning>
-
-            <InputWarning icon="password" v-if="errors.passwordError">
-                La contraseña debe tener al menos seis carácteres.
-            </InputWarning>
-        -->
+        <slot/>
     </div>
 </template>
 

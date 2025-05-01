@@ -5,7 +5,8 @@ defineProps({
     icon: {
         type: String,
         default: "email"
-    }
+    },
+    message: String
 });
 </script>
 
@@ -14,7 +15,8 @@ defineProps({
         <MailWarning          class="hidden" :class="{ 'block' : icon == 'email' }" />
         <MailQuestionIcon     class="hidden" :class="{ 'block' : icon == 'email-length' }" />
         <LockKeyholeIcon      class="hidden" :class="{ 'block' : icon == 'password' }" />
-        <p><slot/></p>
+
+        <p>{{ message }}</p>
     </span>
 </template>
 
@@ -24,6 +26,7 @@ defineProps({
     flex-direction: row;
     align-items: center;
     gap: .5rem;
+    width: 100%;
     padding: .5rem 0;
     color: red;
     font-size: 1.1rem;

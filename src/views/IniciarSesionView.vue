@@ -1,6 +1,10 @@
 <script setup>
+import FormField from '../components/FormField.vue';
+import InputWarning from '../components/InputWarning.vue';
+import RoundableButton from '../components/Button/RoundableButton.vue';
+import SignInWithGoogle from '../components/SignInWithGoogle.vue';
 import { ref } from 'vue';
-import { useRouter, RouterLink } from 'vue-router';
+import { useRouter } from 'vue-router';
 import { signIn } from '../services/auth';
 
 const user = ref({
@@ -8,21 +12,41 @@ const user = ref({
     password: ""
 });
 
-const toggleShowPassword = ref(false);
 const loading = ref(false);
 const router = useRouter();
+const errors = ref({ emailError: false, passwordError: false });
 
 const handleSubmit = async () => {
     if(loading.value) return;
+
+    errors.value = { emailError: false, passwordError: false };
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(user.value.email)) {
+        errors.value.emailError = true;
+    }
+
+    if (user.value.password.length < 6) {
+        errors.value.passwordError = true;
+    }
+
+    if (errors.value.emailError || errors.value.passwordError) {
+        return;
+    }
+
     loading.value = true;
 
     try {
         await signIn({ ...user.value });
         router.push("/");
     } catch (error) {
-        loading.value = false;
-        console.error("[SignInView.vue] - Error al iniciar sesión:", error);
-        throw error;
+        if(error.code === "auth/invalid-email") {
+            errors.value.emailError = true;
+        }
+
+        if(error.code === "auth/invalid-credential") {
+            errors.value.passwordError = true;
+        }
     }
 
     loading.value = false;
@@ -30,48 +54,39 @@ const handleSubmit = async () => {
 </script>
 
 <template>
-    <h1>Iniciar sesión</h1>
+    <div class="wrap">
+        <div class="div-forms">
+            <h1>Iniciar sesión</h1>
 
-    <form @submit.prevent="handleSubmit">
-        <div>
-            <label for="email">Correo electrónico</label>
-            <input
-                id="email"
-                name="email"
-                type="email"
-                autocomplete="on"
-                v-model="user.email"
-                placeholder="ejemplo@gmail.com"
-            />
+            <form @submit.prevent="handleSubmit" class="login-form">
+                <FormField
+                    useFor="email"
+                    title="Correo electrónico"
+                    type="email"
+                    placeholder="ejemplo@gmail.com"
+                    autocomplete="on"
+                    v-model="user.email"
+                >
+                    <InputWarning v-if="errors.emailError" message="El correo electrónico no es válido."/>
+                </FormField>
+
+                <FormField
+                    useFor="password"
+                    title="Contraseña"
+                    type="password"
+                    placeholder="Contraseña$10"
+                    autocomplete="off"
+                    v-model="user.password"
+                />
+
+                <InputWarning v-if="errors.passwordError" message="Estas credenciales no son válidas"/>
+
+                <RoundableButton :disabled="!user.email || !user.password">
+                    {{ loading ? "Cargando..." : "Iniciar sesión" }}
+                </RoundableButton>
+            </form>
+
+            <SignInWithGoogle typeOfLogin="sign-in"/>
         </div>
-
-        <div>
-            <label for="password">Contraseña</label>
-            <input
-                id="password"
-                name="password"
-                :type="!toggleShowPassword ? 'password' : 'text'"
-                v-model="user.password"
-                placeholder="Contraseña$10"
-            />
-
-            <button
-                type="button"
-                @click="toggleShowPassword = !toggleShowPassword"
-            >
-                <span v-if="!toggleShowPassword">Mostrar</span>
-                <span v-else>Ocultar</span>
-            </button>
-        </div>
-
-        <div>
-            <button type="submit">
-                {{ !loading ? "Iniciar sesión" : "Iniciando sesión..." }}
-            </button>
-        </div>
-    </form>
-
-    <RouterLink to="/registro">
-        ¿No tenés una cuenta? Registrate acá.
-    </RouterLink>
+    </div>
 </template>

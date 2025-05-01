@@ -1,9 +1,11 @@
 <script setup>
 import FormField from '../components/FormField.vue';
+import InputWarning from '../components/InputWarning.vue';
 import RoundableButton from '../components/Button/RoundableButton.vue';
+import SignInWithGoogle from '../components/SignInWithGoogle.vue';
 import { ref } from 'vue';
-import { useRouter, RouterLink } from 'vue-router';
-import { createUser, signInWithGoogle } from '../services/auth';
+import { useRouter } from 'vue-router';
+import { createUser } from '../services/auth';
 
 const newUser = ref({
     displayName: "",
@@ -17,15 +19,28 @@ const errors = ref({ emailError: false, emailLengthError: false, passwordError: 
 
 const handleSubmit = async () => {
     if(loading.value) return;
+
+    errors.value = { emailError: false, emailLengthError: false, passwordError: false };
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(newUser.value.email)) {
+        errors.value.emailLengthError = true;
+    }
+
+    if (newUser.value.password.length < 6) {
+        errors.value.passwordError = true;
+    }
+
+    if (errors.value.emailLengthError || errors.value.passwordError) {
+        return;
+    }
+
     loading.value = true;
 
     try {
-        await createUser({ ...newUser.value }, errors.value);
-
+        await createUser({ ...newUser.value });
         router.push("/");
     } catch (error) {
-        loading.value = false;
-
         if(error.code === "auth/email-already-in-use") {
             errors.value.emailError = true;
         }
@@ -33,23 +48,9 @@ const handleSubmit = async () => {
         if(error.code === "auth/invalid-email") {
             errors.value.emailLengthError = true;
         }
-        
-        if(error.code === "auth/weak-password") {
-            errors.value.passwordError = true;
-        }
     }
 
     loading.value = false;
-}
-
-const openGooglePopup = async () => {
-    try {
-        await signInWithGoogle();
-        router.push("/");
-    } catch (error) {
-        console.error("[LoginView.vue] - Error al iniciar sesión con Google:", error);
-        throw error;
-    }
 }
 </script>
 
@@ -77,7 +78,10 @@ const openGooglePopup = async () => {
                     placeholder="ejemplo@gmail.com"
                     autocomplete="on"
                     v-model="newUser.email"
-                />
+                >
+                    <InputWarning v-if="errors.emailError" message="El correo electrónico ya está en uso." />
+                    <InputWarning v-else-if="errors.emailLengthError" message="Este no es un correo electrónico válido." />
+                </FormField>
 
                 <FormField
                     useFor="password"
@@ -86,31 +90,16 @@ const openGooglePopup = async () => {
                     placeholder="Contraseña$10"
                     autocomplete="off"
                     v-model="newUser.password"
-                />
+                >
+                    <InputWarning v-if="errors.passwordError" message="La contraseña debe tener al menos 6 (seis) carácteres." />
+                </FormField>
 
                 <RoundableButton :disabled="!newUser.email || !newUser.password">
                     {{ !loading ? "Crear cuenta" : "Creando cuenta..." }}
                 </RoundableButton>
             </form>
 
-            <div class="login-p-method">
-                <div>
-                    <hr>
-                    <p>o podés registrarte desde <span><b>:</b></span></p>
-                    <hr>
-                </div>
-
-                <form action="#" @submit.prevent="openGooglePopup">
-                    <button type="submit">
-                        <img src="/Icons/google.png" alt="Logo de Google">
-                        <span>Ingresar con Google</span>
-                    </button>
-                </form>
-
-                <p class="redirect-to">
-                    ¿Ya tenés una cuenta? <RouterLink to="/iniciar-sesion">Iniciá sesión acá.</RouterLink>
-                </p>
-            </div>
+            <SignInWithGoogle typeOfLogin="log-in"/>
         </div>
     </div>
 </template>
