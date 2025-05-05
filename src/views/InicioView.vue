@@ -9,7 +9,7 @@ import AddOptionForTask from "../components/AddOptionForTask.vue";
 import StylizedTextarea from "../components/StylizedTextarea.vue";
 import TaskInfo from "../components/TaskInfo.vue";
 import clickOutside from "../directives/clickOutside";
-import { Settings2, ChevronLeft, PenTool, AlarmClockIcon, TypeIcon, MoreVertical, XCircle, AlarmCheck, AlarmClockOff, Circle, X, Calendar1, Trash2, CircleCheckIcon, Pencil, LogOut } from "lucide-vue-next";
+import { Settings2, ChevronLeft, PenTool, AlarmClockIcon, TypeIcon, MoreVertical, XCircle, AlarmCheck, AlarmClockOff, Circle, X, Calendar1, Trash2, CircleCheckIcon, Pencil, LogOut, Menu } from "lucide-vue-next";
 import { ref, onMounted, watch } from "vue";
 import { useRouter } from "vue-router";
 import { useBreakpoints } from "@vueuse/core";
@@ -121,6 +121,9 @@ const handleSubmit = async () => {
 
         openScheduleTask.value = false;
         openFontSelector.value = false;
+        editTask.value = null;
+        enableSelectTasks.value = false;
+        openTaskOptions.value = false;
 
         createBtn.value = false;
     } catch (error) {
@@ -236,7 +239,7 @@ const submitEditedTask = async (id, title, isScheduled, font, completed) => {
     }
 }
 
-const breakpoints = useBreakpoints({ mobile: 0, tablet: 769, laptop: 1024, desktop: 1280 });
+const breakpoints = useBreakpoints({ mobile: 0, tablet: 875, laptop: 1024, desktop: 1280 });
 const devices = breakpoints.between("mobile", "tablet");
 
 const createBtn = ref(false);
@@ -264,48 +267,53 @@ function showNotification(title) {
             },
             silent: false,
             vibrate: [200, 100, 200],
-            requireInteraction: false}).onclick = (event) => {
-                event.preventDefault();
-                window.focus();
-                window.location.href = event.target.data.url;
-            }
-    } else {
-        console.warn("Permiso de notificación no concedido.");
+            requireInteraction: false
+        }).onclick = (event) => {
+            event.preventDefault();
+            window.focus();
+            window.location.href = event.target.data.url;
+        }
     }
 }
 
 function scheduleNotification(task) {
     const scheduledTime = new Date(task.isScheduled);
-    if (isNaN(scheduledTime)) {
-        console.error("Fecha inválida para la tarea:", task.isScheduled);
-        return;
-    }
-
     const now = Date.now();
     const delay = scheduledTime - now;
-
-    console.log(`Programando notificación para "${task.title}" en ${delay} ms`);
 
     if (delay > 0) {
         setTimeout(() => {
             showNotification(task.title);
             notifiedTasksIDs.value.add(task.id);
         }, delay);
-    } else {
-        console.error("La tarea caducó.");
     }
 }
 
-scheduleNotification({ title: "Tarea de prueba", isScheduled: new Date(Date.now() + 5000), font: "default", id: 1 });
-
 watch(tasks, (newTasks) => {
-    console.log("Tareas actualizadas:", newTasks);
     newTasks.forEach((task) => {
         if (!notifiedTasksIDs.value.has(task.id)) {
             scheduleNotification(task);
         }
     });
 }, { immediate: true });
+
+const openMenu = ref(false);
+const toggleMenu = () => {
+    openMenu.value = !openMenu.value;
+}
+
+const openLogout = ref(false);
+const handleLogout = async () => {
+    try {
+        await logout();
+        router.push("/iniciar-sesion");
+    } catch (error) {
+        console.error("[InicioView.vue] - Error al cerrar sesión: ", error);
+    }
+}
+const toggleLogout = () => {
+    openLogout.value = !openLogout.value;
+}
 </script>
 
 <template>
@@ -314,12 +322,12 @@ watch(tasks, (newTasks) => {
             <header>
                 <h1>Mis tareas</h1>
 
-                <FineBorderButton @click="logout" class="logout-btn">
+                <FineBorderButton @click.stop="openMenu = !openMenu">
                     <template #sr-only>
-                        Cerrar sesión
+                        Abrir menú
                     </template>
 
-                    <LogOut />
+                    <Menu />
                 </FineBorderButton>
             </header>
 
@@ -731,6 +739,49 @@ watch(tasks, (newTasks) => {
                     </RoundableButton>
                 </form>
 
+            </div>
+        </Transition>
+
+        <div v-if="openMenu && !openLogout" class="aside-bg"/>
+
+        <Transition name="slide">
+            <aside v-if="openMenu && !openLogout" v-click-outside="toggleMenu">
+                <div>
+                    <span>¡Bienvenido, <strong>{{ loggedUser.displayName }}</strong>!</span>
+
+                    <FineBorderButton @click="openMenu = !openMenu">
+                        <template #sr-only>
+                            Cerrar menú
+                        </template>
+
+                        <X />
+                    </FineBorderButton>
+                </div>
+
+                <div>
+                    <FineBorderButton @click.stop="openLogout = !openLogout" class="logout-btn">
+                        <template #sr-only>
+                            Cerrar sesión
+                        </template>
+
+                        <LogOut />
+                        <span>Cerrar sesión</span>
+                    </FineBorderButton>
+                </div>
+            </aside>
+        </Transition>
+
+        <div v-if="openLogout" class="logout-bg"/>
+
+        <Transition name="fade-y">
+            <div v-if="openLogout" v-click-outside="toggleLogout" class="logout-confirmation">
+                <p>¿Estás seguro de que querés cerrar sesión?</p>
+
+                <div class="logout-btn-container">
+                    <SimpleButton @click="toggleLogout">Cancelar</SimpleButton>
+
+                    <RoundableButton design="secondary" @click="handleLogout">Confirmar</RoundableButton>
+                </div>
             </div>
         </Transition>
     </div>

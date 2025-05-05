@@ -78,12 +78,16 @@ defineProps({
         top: 50%;
         right: .5rem;
         transform: translateY(-50%);
-        padding: .4rem 0 .4rem .4rem;
+        padding: .4rem 0 .2rem .2rem;
         background-color: #564935;
         color: #D8B885;
         border: 0;
         border-radius: 0 1rem 1rem 0;
         pointer-events: none;
+    }
+    .task-add-schedule-button svg {
+        width: 1.5rem;
+        height: 1.5rem;
     }
 
     .task-font-container {

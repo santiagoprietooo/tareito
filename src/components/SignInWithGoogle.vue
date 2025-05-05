@@ -25,7 +25,7 @@ defineProps({
     <div class="login-p-method">
         <div>
             <hr>
-            <p>o podés registrarte desde <span><b>:</b></span></p>
+            <p>o podés {{ typeOfLogin === "log-in" ? "registrarte" : "ingresar" }} desde <span><b>:</b></span></p>
             <hr>
         </div>
 

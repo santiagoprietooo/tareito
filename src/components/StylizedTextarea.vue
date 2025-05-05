@@ -12,9 +12,7 @@ defineProps({
     font: String
 });
 
-const { textarea: title, input: titleInput } = useTextareaAutosize();
-watch(() => task, (newValue) => { titleInput.value = newValue });
-watch(() => titleInput.value, (newValue) => { task = newValue });
+const { textarea } = useTextareaAutosize();
 </script>
 
 <template>
@@ -30,7 +28,7 @@ watch(() => titleInput.value, (newValue) => { task = newValue });
             maxlength="75"
             class="textarea-style"
             :class="[font, { 'title-length-bradius' : task.length === 75 }]"
-            ref="title"
+            ref="textarea"
             v-model="task"
             @keydown.enter.prevent="emit('submitForm')"
         />
