@@ -90,7 +90,7 @@ function orderBy(event) {
     }
 }
 
-const notificationMessage = ref(null);
+const notificationMessage = ref("");
 const alertMessage = ref(null);
 
 const handleSubmit = async () => {
@@ -180,7 +180,7 @@ const deletedTaskMessage = (title) => {
     notificationMessage.value = `Se borró <strong>"${title}"</strong> de tu lista de tareas.`
 
     setTimeout(() => {
-        notificationMessage.value = null;
+        notificationMessage.value = "";
     }, 5000);
 }
 
@@ -231,7 +231,7 @@ const submitEditedTask = async (id, title, isScheduled, font, completed) => {
         notificationMessage.value = `Se editó la tarea.`
 
         setTimeout(() => {
-            notificationMessage.value = null;
+            notificationMessage.value = "";
         }, 5000);
     } catch (error) {
         console.error(`[HomeView.vue] - Error al querer editar la tarea con ID ${id}.`, error);
@@ -527,7 +527,6 @@ const toggleLogout = () => {
                     <div v-if="enableSelectTasks == true" class="task-btn-container">
                         <div
                             class="bg-click"
-                            role="button"
                             @click="!tasksToDelete.includes(task.id) ?
                             tasksToDelete.push(task.id) : tasksToDelete.splice(tasksToDelete.indexOf(task.id), 1)"
                         />
@@ -576,8 +575,8 @@ const toggleLogout = () => {
                 </article>
 
                 <Transition name="opacity">
-                    <div v-if="enableSelectTasks" class="task-delete-container">
-                        <span><b>Tareas seleccionadas:</b> {{ tasksToDelete.length }}</span>
+                    <section v-if="enableSelectTasks" class="task-delete-container" aria-label="Controles de eliminación de tareas">
+                        <p><b>Tareas seleccionadas:</b> {{ tasksToDelete.length }}</p>
 
                         <div>
                             <SimpleButton @click="enableSelectTasks = false; tasksToDelete.length = 0; openTaskOptions = false">
@@ -594,21 +593,21 @@ const toggleLogout = () => {
                                 </RoundableButton>
                             </form>
                         </div>
-                    </div>
+                    </section>
                 </Transition>
             </div>
 
             <div v-else class="loading-box">
                 <Loader v-if="!loadTasks"/>
 
-                <div v-else class="no-tasks">
+                <section v-else class="no-tasks">
                     <img src="/Icons/Tareín_duditativo-fondo_transparente.png" alt="Tareito dudando">
                     <p>
                         No creaste ninguna tarea todavía. <br>
                         <span v-if="devices">Podés crear una <strong>presionando el botón de abajo a la derecha</strong>.</span>
                         <span v-else>Podés crear una <strong>completando el campo a tu izquierda</strong>.</span>
                     </p>
-                </div>
+                </section>
             </div>
 
             <Transition name="fade-y">
@@ -616,7 +615,7 @@ const toggleLogout = () => {
                     <div>
                         <p v-html="notificationMessage"/>
 
-                        <FineBorderButton @click="notificationMessage = null">
+                        <FineBorderButton @click="notificationMessage = ''">
                             <template #sr-only>
                                 Cerrar mensaje
                             </template>

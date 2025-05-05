@@ -812,11 +812,11 @@ aside div {
 }
 
 /*---------------------------------------------------------------------------------------------------------------*/
-section {
+/* section {
     min-height: 100vh;
     padding-top: 4rem;
     background-color: #FCF4E9;
-}
+} */
 
 .notes-header {
     display: flex;

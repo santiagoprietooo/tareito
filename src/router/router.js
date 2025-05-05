@@ -23,6 +23,8 @@ subscribeToAuthChanges(userData => loggedUser = userData);
 router.beforeEach((to, from) => {
     if(to.meta.requiresAuth && loggedUser.id === null) {
         return { path: "/registro" }
+    } else if(!to.meta.requiresAuth && loggedUser.id !== null) {
+        return { path: "/" }
     }
 });
 
