@@ -70,8 +70,93 @@ button:disabled {
     background-color: #D8B885;
     order: 1;
 }
-.div-forms h1 {
+.div-forms header:has(h1) {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: .5rem;
     padding: 2rem;
+}
+.div-forms header:has(h1) p {
+    font-size: 1.1rem;
+    color: rgba(0, 0, 0, 0.650);
+}
+
+.login-section {
+    width: 50%;
+    background-color: #FCF4E9;
+    order: 2;
+}
+.login-section header {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: .5rem;
+    padding: 2rem;
+}
+.login-section header p {
+    font-size: 1.1rem;
+    color: rgba(0, 0, 0, 0.650);
+}
+
+.paper {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    background-color: white;
+    padding: 2.5rem 0;
+}
+.paper ul {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+.paper ul li {
+    display: flex;
+    align-items: end;
+    min-height: 2.5rem;
+    width: 100%;
+    padding-left: .5rem;
+    padding-bottom: .1rem;
+    border-bottom: 1.5px solid rgba(0, 0, 0, 0.275);
+}
+.paper ul li:first-of-type {
+    border-top: 1.5px solid rgba(0, 0, 0, 0.275);
+}
+
+.paper-holes {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    border-right: 0.110rem solid red;
+}
+.paper-holes span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 2.5rem;
+    width: 2.5rem;
+    border-top: 1.5px solid rgba(0, 0, 0, 0.275);
+    border-bottom: 1.5px solid rgba(0, 0, 0, 0.275);
+}
+.paper-holes span:nth-of-type(2), .paper-holes span:nth-of-type(3) {
+    min-height: 2.550rem;
+}
+
+.paper-hole-red-line {
+    position: absolute;
+    top: 0;
+    left: 2.5rem;
+    display: block;
+    height: 2.5rem;
+    width: 0.110rem;
+    background-color: red;
+}
+.paper-hole-red-line:last-of-type {
+    top: unset;
+    bottom: 0;
 }
 
 .form-class {
@@ -117,16 +202,12 @@ button:disabled {
     color: rgba(0, 0, 0, 0.650) !important;
 }
 
-.div-forms-p {
-    padding: 0 2rem;
-}
-
 .login-form {
     display: flex;
     flex-direction: column;
     align-items: end;
     gap: 1rem;
-    padding: 2rem;
+    padding: 0 2rem;
 }
 .login-form button[type="submit"] {
     margin-top: 1rem;
@@ -750,6 +831,9 @@ aside div {
     }
     .div-forms {
         min-height: 100vh;
+        width: 100%;
+    }
+    .login-section {
         width: 100%;
     }
     .my-tasks {

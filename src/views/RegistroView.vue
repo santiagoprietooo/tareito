@@ -3,6 +3,7 @@ import FormField from '../components/FormField.vue';
 import InputWarning from '../components/InputWarning.vue';
 import RoundableButton from '../components/Button/RoundableButton.vue';
 import SignInWithGoogle from '../components/SignInWithGoogle.vue';
+import { Circle } from 'lucide-vue-next';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { createUser } from '../services/auth';
@@ -15,7 +16,11 @@ const newUser = ref({
 
 const loading = ref(false);
 const router = useRouter();
-const errors = ref({ emailError: false, emailLengthError: false, passwordError: false });
+const errors = ref({
+    emailError: false,
+    emailLengthError: false,
+    passwordError: false
+});
 
 const handleSubmit = async () => {
     if(loading.value) return;
@@ -57,9 +62,11 @@ const handleSubmit = async () => {
 <template>
     <div class="wrap">
         <div class="div-forms">
-            <h1>Registrarse</h1>
+            <header>
+                <h1>Registrarse</h1>
+                <p class="div-forms-p">Los campos marcados con * son obligatorios para poder crear una cuenta.</p>
+            </header>
 
-            <p class="div-forms-p">Los campos marcados con * son obligatorios para poder crear una cuenta.</p>
 
             <form @submit.prevent="handleSubmit" class="login-form">
                 <FormField
@@ -101,5 +108,31 @@ const handleSubmit = async () => {
 
             <SignInWithGoogle typeOfLogin="log-in"/>
         </div>
+
+        <section class="login-section">
+            <header>
+                <h2>¿Por qué crear una cuenta?</h2>
+                <p>Tareín es una aplicación web diseñada para ayudarte a gestionar tus tareas de forma simple y efectiva. <strong>Acá vas a encontrar beneficios y características como:</strong></p>
+            </header>
+
+            <div class="paper">
+                <div class="paper-holes">
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                </div>
+
+                <ul>
+                    <li>Acceso a tus tareas desde cualquier dispositivo</li>
+                    <li>Interfaz intuitiva y fácil de usar</li>
+                    <li>Recordatorios y notificaciones inteligentes</li>
+                    <li>Clasificación y priorización de tareas</li>
+                    <li>Seguimiento de progreso en tiempo real</li>
+                </ul>
+
+                <span class="paper-hole-red-line" aria-hidden="true"></span>
+                <span class="paper-hole-red-line" aria-hidden="true"></span>
+            </div>
+        </section>
     </div>
 </template>
