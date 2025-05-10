@@ -67,7 +67,6 @@ const handleSubmit = async () => {
                 <p class="div-forms-p">Los campos marcados con * son obligatorios para poder crear una cuenta.</p>
             </header>
 
-
             <form @submit.prevent="handleSubmit" class="login-form">
                 <FormField
                     useFor="displayName"
@@ -112,7 +111,7 @@ const handleSubmit = async () => {
         <section class="login-section">
             <header>
                 <h2>¿Por qué crear una cuenta?</h2>
-                <p>Tareín es una aplicación web diseñada para ayudarte a gestionar tus tareas de forma simple y efectiva. <strong>Acá vas a encontrar beneficios y características como:</strong></p>
+                <p><b>Tareín</b> es una aplicación web diseñada para ayudarte a gestionar tus tareas de forma simple y efectiva. <strong>Acá vas a encontrar beneficios y características como:</strong></p>
             </header>
 
             <div class="paper">
@@ -133,6 +132,11 @@ const handleSubmit = async () => {
                 <span class="paper-hole-red-line" aria-hidden="true"></span>
                 <span class="paper-hole-red-line" aria-hidden="true"></span>
             </div>
+
+            <footer class="login-footer">
+                <h3>¿Qué estás esperando para unirte?</h3>
+                <p>Crear una cuenta es gratis y te toma <b>¡menos de un minuto!</b> Además, podés utilizar una <b>cuenta de google</b> para hacer el proceso de forma más rápida.</p>
+            </footer>
         </section>
     </div>
 </template>

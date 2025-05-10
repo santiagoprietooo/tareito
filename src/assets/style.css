@@ -159,6 +159,23 @@ button:disabled {
     bottom: 0;
 }
 
+.login-footer {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: .5rem;
+    padding: 2rem;
+}
+.login-footer h3 {
+    font-size: 1.3rem;
+    font-weight: normal;
+}
+.login-footer p {
+    font-size: 1.1rem;
+    color: rgba(0, 0, 0, 0.650);
+}
+
+
 .form-class {
     display: flex;
     flex-direction: column;
@@ -834,6 +851,7 @@ aside div {
         width: 100%;
     }
     .login-section {
+        min-height: max-content !important;
         width: 100%;
     }
     .my-tasks {

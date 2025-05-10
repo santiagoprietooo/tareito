@@ -56,7 +56,9 @@ const handleSubmit = async () => {
 <template>
     <div class="wrap">
         <div class="div-forms">
-            <h1>Iniciar sesión</h1>
+            <header>
+                <h1>Iniciar sesión</h1>
+            </header>
 
             <form @submit.prevent="handleSubmit" class="login-form">
                 <FormField
