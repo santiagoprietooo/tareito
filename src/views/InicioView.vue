@@ -261,7 +261,7 @@ const sendNotification = async (task) => {
             registration.showNotification("Tenés una tarea programada", {
                 body: task,
                 icon: "/icons/Tareín-fondo_blanco.jpg",
-                badge: "/icons/Tareín-fondo_blanco.jpg",
+                badge: "/icons/Tareín-badge.png"
             });
         });
     }

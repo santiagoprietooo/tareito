@@ -23,7 +23,7 @@ self.addEventListener("push", (event) => {
     const options = {
         body: data.task,
         icon: "/icons/Tareín-fondo_blanco.jpg",
-        badge: "/icons/Tareín-fondo_blanco.jpg"
+        badge: "/icons/Tareín-badge.png"
     };
 
     event.waitUntil(self.registration.showNotification(data.title, options));
