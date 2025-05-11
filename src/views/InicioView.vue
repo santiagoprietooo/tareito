@@ -260,8 +260,12 @@ const sendNotification = async (task) => {
         navigator.serviceWorker.ready.then(registration => {
             registration.showNotification("Tenés una tarea programada", {
                 body: task,
-                icon: "/icons/Tareín-fondo_blanco.jpg",
-                badge: "/icons/Tareín-badge.png"
+                icon: "/icons/icon-192.png",
+                badge: "/icons/badge-96.png",
+                lang: "es-ES",
+                vibrate: [200, 100, 200],
+                requireInteraction: false,
+                data: { url: '/' }
             });
         });
     }
