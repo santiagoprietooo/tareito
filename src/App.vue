@@ -13,7 +13,20 @@ const titles = {
 };
 
 watchEffect(() => {
-    title.value = !titles[route.path] ? "Cargando..." : `Tareín ${titles[route.path]}` || "Error | Página no encontrada";
+    switch (route.path) {
+        case "/":
+            title.value = "Tareín | Mis tareas";
+            break;
+        case "/registro":
+            title.value = "Tareín | Crear cuenta";
+            break;
+        case "/iniciar-sesion":
+            title.value = "Tareín | Iniciar sesión";
+            break;
+        default:
+            title.value = "Error 404 | Página no encontrada";
+            break;
+    }
 });
 </script>
 

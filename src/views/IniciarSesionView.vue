@@ -90,5 +90,16 @@ const handleSubmit = async () => {
 
             <SignInWithGoogle typeOfLogin="sign-in"/>
         </div>
+
+        <div class="login-section">
+            <header>
+                <h2>¡Bienvenido!</h2>
+                <p>Gracias por volver, <b>¡te estábamos esperando!</b> Seguí disfrutando de <b>Tareín</b> y todos sus beneficios.</p>
+            </header>
+
+            <div class="login-section-image">
+                <img src="/Icons/Tareín-fondo_transparente.png" alt="Logo de Tareín"/>
+            </div>
+        </div>
     </div>
 </template>

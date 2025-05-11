@@ -255,26 +255,39 @@ const returnBtnForDevices = () => {
 
 const notifiedTasksIDs = ref(new Set());
 
-function showNotification(title) {
-    if (Notification.permission === 'granted') {
-        new Notification(title, {
-            body: "Tenés una tarea programada para esta hora.",
-            icon: "/icons/Tareín-fondo_blanco.jpg",
-            badge: "/icons/Tareín-fondo_blanco.jpg",
-            lang: "es-ES",
-            data: {
-                url: "/",
-            },
-            silent: false,
-            vibrate: [200, 100, 200],
-            requireInteraction: false
-        }).onclick = (event) => {
-            event.preventDefault();
-            window.focus();
-            window.location.href = event.target.data.url;
+const sendNotification = async (task) => {
+    if (!('Notification' in window) || !('serviceWorker' in navigator)) {
+        console.warn("Notificaciones o Service Worker no están soportados en este navegador.");
+        return;
+    }
+
+    let permission = Notification.permission;
+    if (permission !== 'granted') {
+        try {
+            permission = await Notification.requestPermission();
+        } catch (err) {
+            console.error("Error solicitando permiso de notificación:", err);
+            return;
         }
     }
-}
+
+    if (permission === 'granted') {
+        try {
+            const registration = await navigator.serviceWorker.ready;
+            registration.showNotification("Tenés una tarea programada", {
+                body: task,
+                icon: "/icons/Tareín-fondo_blanco.jpg",
+                badge: "/icons/Tareín-fondo_blanco.jpg",
+                lang: "es-ES",
+                silent: false,
+                vibrate: [200, 100, 200],
+                requireInteraction: false
+            });
+        } catch (err) {
+            console.error("Error al mostrar la notificación:", err);
+        }
+    }
+};
 
 function scheduleNotification(task) {
     const scheduledTime = new Date(task.isScheduled);
@@ -283,7 +296,7 @@ function scheduleNotification(task) {
 
     if (delay > 0) {
         setTimeout(() => {
-            showNotification(task.title);
+            sendNotification(task.title);
             notifiedTasksIDs.value.add(task.id);
         }, delay);
     }

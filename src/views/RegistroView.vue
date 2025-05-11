@@ -3,10 +3,11 @@ import FormField from '../components/FormField.vue';
 import InputWarning from '../components/InputWarning.vue';
 import RoundableButton from '../components/Button/RoundableButton.vue';
 import SignInWithGoogle from '../components/SignInWithGoogle.vue';
-import { Circle } from 'lucide-vue-next';
+import { CircleCheckBigIcon } from 'lucide-vue-next';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { createUser } from '../services/auth';
+import Paper from '../components/Paper.vue';
 
 const newUser = ref({
     displayName: "",
@@ -57,6 +58,14 @@ const handleSubmit = async () => {
 
     loading.value = false;
 }
+
+const benefits = [
+    "Acceso a tus tareas desde cualquier dispositivo.",
+    "Interfaz intuitiva y fácil de usar.",
+    "Recordatorios y notificaciones inteligentes.",
+    "Clasificación y priorización de tareas.",
+    "Seguimiento de progreso en tiempo real."
+];
 </script>
 
 <template>
@@ -114,24 +123,12 @@ const handleSubmit = async () => {
                 <p><b>Tareín</b> es una aplicación web diseñada para ayudarte a gestionar tus tareas de forma simple y efectiva. <strong>Acá vas a encontrar beneficios y características como:</strong></p>
             </header>
 
-            <div class="paper">
-                <div class="paper-holes">
-                    <span aria-hidden="true"></span>
-                    <span aria-hidden="true"></span>
-                    <span aria-hidden="true"></span>
-                </div>
-
-                <ul>
-                    <li>Acceso a tus tareas desde cualquier dispositivo</li>
-                    <li>Interfaz intuitiva y fácil de usar</li>
-                    <li>Recordatorios y notificaciones inteligentes</li>
-                    <li>Clasificación y priorización de tareas</li>
-                    <li>Seguimiento de progreso en tiempo real</li>
-                </ul>
-
-                <span class="paper-hole-red-line" aria-hidden="true"></span>
-                <span class="paper-hole-red-line" aria-hidden="true"></span>
-            </div>
+            <Paper>
+                <li v-for="(benefit, index) in benefits" :key="index" class="paper-list-item">
+                    <span><CircleCheckBigIcon class="paper-list-icon"/></span>
+                    {{ benefit }}
+                </li>
+            </Paper>
 
             <footer class="login-footer">
                 <h3>¿Qué estás esperando para unirte?</h3>
