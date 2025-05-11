@@ -23,12 +23,17 @@ let loggedUser = {
 subscribeToAuthChanges(userData => loggedUser = userData);
 
 router.beforeEach((to, from) => {
-    if(to.meta.requiresAuth && loggedUser.id === null) {
-        return { path: "/registro" }
-    } else if(!to.meta.requiresAuth && loggedUser.id !== null) {
-        return { path: "/" }
+    if (to.meta.requiresAuth && loggedUser.id === null) {
+        return { path: "/iniciar-sesion" };
     }
+
+    if (loggedUser.id && (to.path === "/registro" || to.path === "/iniciar-sesion")) {
+        return { path: "/" };
+    }
+
+    return true;
 });
+
 
 /* import NotesView from "../views/NotesView.vue";
 import NoteView from "../views/NoteView.vue"; */

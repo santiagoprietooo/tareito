@@ -3,11 +3,11 @@ import FormField from '../components/FormField.vue';
 import InputWarning from '../components/InputWarning.vue';
 import RoundableButton from '../components/Button/RoundableButton.vue';
 import SignInWithGoogle from '../components/SignInWithGoogle.vue';
+import Paper from '../components/Paper.vue';
 import { CircleCheckBigIcon } from 'lucide-vue-next';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { createUser } from '../services/auth';
-import Paper from '../components/Paper.vue';
 
 const newUser = ref({
     displayName: "",
