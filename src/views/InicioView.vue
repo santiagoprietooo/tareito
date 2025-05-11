@@ -633,7 +633,7 @@ const toggleLogout = () => {
         </main>
 
         <Transition name="task-create-appear">
-            <div class="div-forms" v-if="!devices || createBtn == true">
+            <div class="div-forms form-min-height"v-if="!devices || createBtn == true">
                 <form
                     action=""
                     class="form-class pb-5"

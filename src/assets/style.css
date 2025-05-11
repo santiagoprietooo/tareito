@@ -819,6 +819,9 @@ aside div {
         min-height: 100%;
         width: 100%;
     }
+    .form-min-height {
+        min-height: 100dvh !important;
+    }
     .login-section {
         width: 100%;
     }
