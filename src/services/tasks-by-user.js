@@ -11,7 +11,6 @@ export async function addTask({ title, isScheduled, font, completed }) {
     const taskData = { user_id: auth.currentUser?.uid, title, isScheduled, font, completed, created_at: serverTimestamp() };
 
     if(!auth.currentUser?.uid) {
-        console.error("[tasks-by-user.js] - No se encontró el ID del usuario.");
         return;
     }
 
@@ -57,14 +56,11 @@ export async function getTaskByID(id) {
         const taskSnapshot = await getDoc(taskRef);
 
         if(taskSnapshot.exists()) {
-            console.log(`La tarea con el ID ${id} fue encontrada.`);
             return taskSnapshot.data();
         } else {
-            console.error(`La tarea con el ID ${id} NO fue encontrada.`);
             return null;
         }
     } catch (error) {
-        console.error(`[task-by-user.js] - Error al buscar la tarea con el ID ${id}.`, error);
         throw error;
     }
 }
@@ -77,10 +73,7 @@ export async function deleteTaskByID(id) {
     try {
         const taskRef = doc(db, `/tasks/${id}`);
         await deleteDoc(taskRef);
-
-        console.log("Se eliminó la tarea con el ID: ", id);
     } catch (error) {
-        console.error(`[tasks-by-user.js] - Error al eliminar la tarea mediante el ID ${id}.`, error);
         throw error;
     }
 }
@@ -99,10 +92,7 @@ export async function editTaskByID(id, { title, isScheduled, font, completed }) 
         }
 
         await updateDoc(taskRef, { title, isScheduled, font, completed });
-
-        console.log("Se editó la tarea con ID: ", id);
     } catch (error) {
-        console.error(`[tasks-by-user.js] - Error al editar la tarea con el ID ${id}.`, error);
         throw error;
     }
 }

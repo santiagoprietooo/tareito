@@ -9,7 +9,6 @@ export function getDate(date) {
     const validDate = typeof date === "string" ? new Date(date) : date;
 
     if (isNaN(validDate)) {
-        console.error("Fecha inválida:", date);
         return null;
     }
 
@@ -34,7 +33,6 @@ export function getHour(hour) {
     const validDate = typeof hour === "string" ? new Date(hour) : hour;
 
     if (isNaN(validDate)) {
-        console.error("Fecha inválida:", hour);
         return null;
     }
 

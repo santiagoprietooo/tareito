@@ -1,5 +1,5 @@
 {
-  "name": "notas-y-tareas",
+  "name": "tarein",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@vueuse/core": "^12.8.2",
+    "emailjs-com": "^3.2.0",
     "firebase": "^11.1.0",
     "lucide-vue-next": "^0.469.0",
     "vue": "^3.5.13",

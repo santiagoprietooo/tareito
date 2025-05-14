@@ -1,0 +1,104 @@
+.help-page-header {
+    position: fixed;
+    top: 0;
+    display: flex;
+    align-items: center;
+    background-color: #D8B885;
+    padding: 1rem;
+    min-height: 4.2rem;
+    width: 100%;
+}
+
+.help-page {
+    display: flex;
+    justify-content: center;
+    padding: 7rem 0 4.5rem;
+    min-height: 100dvh;
+    width: 100%;
+    background: linear-gradient(to bottom right, #FCF4E9, #D8B885);
+}
+
+.help-container {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    width: clamp(300px, 75%, 700px);
+    background-color: #D8B885;
+    border-radius: .5rem;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+}
+
+.help-container-header {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 1rem;
+    text-align: center;
+    border-bottom: 2.5px dashed #fcf4e9a9;
+}
+.help-container-header p {
+    font-size: 1.2rem;
+}
+.help-container-header-break-1 {
+    display: none;
+}
+.help-container-header-break-2 {
+    display: block;
+}
+
+.help-container-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+    padding-top: 1rem;
+}
+
+.help-container-form div:has(button[type="submit"]) {
+    display: flex;
+    justify-content: end;
+    width: 100%;
+    margin-top: 1rem;
+}
+
+.help-container-loader {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.help-container-success-message {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .5rem;
+}
+.help-container-success-message img {
+    width: clamp(95px, 45%, 200px);
+}
+.help-container-success-message p {
+    font-size: 1.2rem;
+    text-align: center;
+}
+
+.help-container-success-message-buttons {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+.help-container-success-message-buttons button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@media (max-width: 600px) {
+    .help-container-header-break-1 {
+        display: block;
+    }
+
+    .help-container-success-message-buttons button {
+        width: 50%;
+    }
+}

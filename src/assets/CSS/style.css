@@ -1,7 +1,7 @@
 @font-face {  
     font-family: 'Jurnal-Note';
-    src: url('./fonts/Jurnal-Note.otf') format('truetype');  
-    font-weight: normal;  
+    src: url('../fonts/Jurnal-Note.otf') format('truetype');  
+    font-weight: normal;
     font-style: normal;  
 }
 
@@ -390,10 +390,6 @@ select option:hover {
     pointer-events: none;
 }
 
-.edit-task-div {
-    gap: 0 !important;
-}
-
 .task-to-btn-containter {
     flex-direction: row !important;
     width: max-content !important;
@@ -695,6 +691,19 @@ aside div {
     width: 100%;
     padding: 2rem;
 }
+.aside-btn-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .5rem;
+}
+.aside-btn-container button {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: start;
+    width: 100%;
+}
 
 .aside-bg {
     position: absolute;
@@ -777,81 +786,6 @@ aside div {
     flex-direction: row;
     align-items: center;
     gap: 2rem;
-}
-
-.not-found {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 2rem;
-    min-height: 100dvh;
-    background-color: #FCF4E9;
-}
-
-.error-page {
-    display: flex;
-    align-items: center;
-    gap: 2rem;
-    padding: 2rem;
-    background-color: #D8B885;
-    border-radius: 2rem;
-}
-
-.error-container {
-    display: flex;
-    height: 100%;
-    border-right: .2rem dashed #FCF4E9;
-}
-
-.error-container-tarein {
-    width: clamp(3rem, 50%, 25rem);
-}
-
-.error-container-text {
-    position: relative;
-    display: flex;
-    height: max-content;
-    width: max-content;
-}
-.error-container-text-img {
-    margin-left: -2rem;
-    width: 16rem;
-}
-.error-container-text-message {
-    position: absolute;
-    top: 3rem;
-    left: 2.4rem;
-    width: max-content;
-    font-size: 1.8rem;
-    text-align: center;
-}
-
-.error-options {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 2rem;
-    width: 100%;
-    order: 2;
-}
-.error-options header {
-    width: 100%;
-    text-align: center;
-}
-.error-options header h1 {
-    font-size: 2.5rem;
-}
-.error-options p {
-    font-size: 1.5rem;
-}
-.error-options div {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 2rem;
-    padding: 2rem;
-    background-color: #FCF4E9;
-    border-radius: 1rem;
 }
 
 @keyframes l3 {
@@ -959,53 +893,6 @@ aside div {
 
     .pb-5 {
         padding-bottom: 8.5rem;
-    }
-
-    .not-found {
-        width: 100%;
-        padding: .5rem;
-    }
-    .error-page {
-        flex-direction: column;
-        padding: .5rem;
-    }
-    .error-container {
-        justify-content: center;
-        border-right: 0;
-        order: 2;
-    }
-    .error-container-text-img {
-        margin-left: -2rem;
-        height: 6rem;
-        width: 9rem;
-    }
-    .error-container-text-message {
-        top: 1.1rem;
-        left: .4rem;
-        font-size: 1.1rem;
-    }
-    .error-options {
-        gap: 1rem;
-    }
-    .error-options header {
-        width: max-content;
-    }
-    .error-options header h1 {
-        font-size: 2rem;
-    }
-    .error-options p {
-        font-size: 1.1rem;
-    }
-    .error-options div {
-        gap: 1rem;
-        width: calc(100% - 1rem);
-        padding: .5rem;
-    }
-    .error-options div button {
-        align-items: center;
-        justify-content: center;
-        width: 50%;
-        font-size: 1rem;
     }
 }
 

@@ -9,7 +9,6 @@ import { auth, db } from "./firebase";
  */
 export async function getNotes(id, callback) {
     if(!id) {
-        console.error("No estás registrado: ", id);
         return;
     }
 

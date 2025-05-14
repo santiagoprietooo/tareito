@@ -3,7 +3,7 @@ import RoundableButton from '../components/Button/RoundableButton.vue';
 import { ref, onMounted } from 'vue';
 import { useTitle } from '@vueuse/core';
 import { useRoute, useRouter } from 'vue-router';
-import { getNoteByID, editNoteByID } from '../services/notes-by-user';
+import { getNoteByID, editNoteByID } from '../../services/notes-by-user';
 import FineBorderButton from '../components/Button/FineBorderButton.vue';
 import { ChevronLeftIcon, Save } from 'lucide-vue-next';
 

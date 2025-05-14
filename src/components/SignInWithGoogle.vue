@@ -8,7 +8,6 @@ const openGooglePopup = async () => {
         await signInWithGoogle();
         router.push("/");
     } catch (error) {
-        console.error("Error al iniciar sesión con Google:", error);
         throw error;
     }
 }

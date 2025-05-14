@@ -3,12 +3,14 @@ import { subscribeToAuthChanges } from "../services/auth";
 import InicioView from "../views/InicioView.vue";
 import RegistroView from "../views/RegistroView.vue";
 import IniciarSesionView from "../views/IniciarSesionView.vue";
+import AyudaView from "../views/AyudaView.vue";
 import NoEncontradoView from "../views/NoEncontradoView.vue";
 
 const routes = [
     { path: "/",                   component: InicioView,   meta: { requiresAuth: true } },
     { path: "/registro",           component: RegistroView  },
     { path: "/iniciar-sesion",     component: IniciarSesionView },
+    { path: "/ayuda",              component: AyudaView,    meta: { requiresAuth: true }},
     { path: "/:pathMatch(.*)*",    component: NoEncontradoView }
 ]
 

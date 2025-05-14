@@ -79,6 +79,12 @@ const inputValue = defineModel();
         border: 1.5px solid rgba(0, 0, 0, 0.275);
         border-radius: .7rem;
         outline: none;
+        transition: all 0.2s ease-in-out;
+    }
+
+    input:focus {
+        transition: all 0.2s ease-in-out;
+        box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
     }
 
     input::placeholder {

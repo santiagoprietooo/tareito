@@ -52,20 +52,15 @@ export async function createUser({ displayName, email, password }) {
 
         await setDoc(newUserRef, newUserData);
         await updateProfile(newUser.user, { displayName });
-
-        console.log("[auth.js] - Se creó la cuenta con éxito. Datos del usuario: ", newUserData);
     } catch (error) {
-        console.error("[auth.js] - Error al crear la cuenta:", error);
         throw error;
     }
 }
 
 export async function signIn({ email, password }) {
     try {
-        const user = await signInWithEmailAndPassword(auth, email, password);
-        console.log("[auth.js] - Se inició sesión con éxito. Datos del usuario: ", user);
+        await signInWithEmailAndPassword(auth, email, password);
     } catch (error) {
-        console.error("[auth.js] - Error al iniciar sesión:", error);
         throw error;
     }
 }
@@ -92,11 +87,6 @@ export async function signInWithGoogle() {
             }
         }
     } catch (error) {
-        if (error.code === 'auth/popup-closed-by-user') {
-            console.error("El usuario cerró el popup antes de completar el inicio de sesión.");
-        } else {
-            console.error("[auth.js] - Error al iniciar sesión con Google:", error);
-        }        
         throw error;
     }
 }

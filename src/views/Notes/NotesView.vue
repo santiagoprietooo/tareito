@@ -6,9 +6,9 @@ import RoundableButton from '../components/Button/RoundableButton.vue';
 import { BookOpen, CalendarDaysIcon, MoreVertical, Plus, TextCursorIcon, Trash, X } from 'lucide-vue-next';
 import { ref, computed, onMounted } from 'vue';
 import { RouterLink, useRouter } from 'vue-router';
-import { addNote, deleteNoteByID, editNoteTitleByID, getNotes } from '../services/notes-by-user';
-import { useLoggedUser } from '../composables/useLoggedUser';
-import { getDate } from '../helpers/date';
+import { addNote, deleteNoteByID, editNoteTitleByID, getNotes } from '../../services/notes-by-user';
+import { useLoggedUser } from '../../composables/useLoggedUser';
+import { getDate } from '../../helpers/date';
 
 const { loggedUser } = useLoggedUser();
 const router = useRouter();

@@ -6,12 +6,6 @@ import { useTitle } from "@vueuse/core";
 const route = useRoute();
 const title = useTitle();
 
-const titles = {
-    "/"               : " | Mis tareas",
-    "/registro"       : " | Crear cuenta",
-    "/iniciar-sesion" : " | Iniciar sesión"
-};
-
 watchEffect(() => {
     switch (route.path) {
         case "/":
@@ -22,6 +16,9 @@ watchEffect(() => {
             break;
         case "/iniciar-sesion":
             title.value = "Tareín | Iniciar sesión";
+            break;
+        case "/ayuda":
+            title.value = "Tareín | Reportar un problema";
             break;
         default:
             title.value = "Error 404 | Página no encontrada";

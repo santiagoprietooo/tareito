@@ -9,7 +9,7 @@ import AddOptionForTask from "../components/AddOptionForTask.vue";
 import StylizedTextarea from "../components/StylizedTextarea.vue";
 import TaskInfo from "../components/TaskInfo.vue";
 import clickOutside from "../directives/clickOutside";
-import { Settings2, ChevronLeft, PenTool, AlarmClockIcon, TypeIcon, MoreVertical, XCircle, AlarmCheck, AlarmClockOff, Circle, X, Calendar1, Trash2, CircleCheckIcon, Pencil, LogOut, Menu } from "lucide-vue-next";
+import { Settings2, ChevronLeft, PenTool, AlarmClockIcon, TypeIcon, MoreVertical, XCircle, AlarmCheck, AlarmClockOff, Circle, X, Calendar1, Trash2, CircleCheckIcon, Pencil, LogOut, Menu, AlertCircleIcon } from "lucide-vue-next";
 import { ref, onMounted, watch } from "vue";
 import { useRouter } from "vue-router";
 import { useBreakpoints } from "@vueuse/core";
@@ -127,7 +127,6 @@ const handleSubmit = async () => {
 
         createBtn.value = false;
     } catch (error) {
-        console.error("[HomeView.vue] - Error al crear la tarea: ", error);
         throw error;
     }
 
@@ -142,7 +141,6 @@ function handleCloseTaskOptions() {
 const confirmDelete = ref(null);
 const openConfirmDelete = (id) => {
     if(!id) {
-        console.error("No hay un ID proporcionado: ", id);
     } else {
         confirmDelete.value = id;
     }
@@ -189,7 +187,6 @@ const taskDetails = ref(null);
 
 const openEditTask = async (id) => {
     if (!id) {
-        console.error(`[HomeView.vue] - No se pasó ningún ID.`);
         return;
     } else {
         taskDetails.value = await getTaskByID(id);
@@ -234,7 +231,6 @@ const submitEditedTask = async (id, title, isScheduled, font, completed) => {
             notificationMessage.value = "";
         }, 5000);
     } catch (error) {
-        console.error(`[HomeView.vue] - Error al querer editar la tarea con ID ${id}.`, error);
         throw error;
     }
 }
@@ -303,7 +299,7 @@ const handleLogout = async () => {
         await logout();
         router.push("/iniciar-sesion");
     } catch (error) {
-        console.error("[InicioView.vue] - Error al cerrar sesión: ", error);
+        throw error;
     }
 }
 const toggleLogout = () => {
@@ -752,7 +748,16 @@ const toggleLogout = () => {
                     </FineBorderButton>
                 </div>
 
-                <div>
+                <div class="aside-btn-container">
+                    <FineBorderButton @click="$router.push('/ayuda')" class="logout-btn">
+                        <template #sr-only>
+                            Reportar un problema
+                        </template>
+
+                        <AlertCircleIcon />
+                        <span>Reportar un problema</span>
+                    </FineBorderButton>
+
                     <FineBorderButton @click.stop="openLogout = !openLogout" class="logout-btn">
                         <template #sr-only>
                             Cerrar sesión

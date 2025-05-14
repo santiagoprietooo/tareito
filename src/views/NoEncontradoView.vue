@@ -1,4 +1,5 @@
 <script setup>
+import "../assets/CSS/NoEncontradoStyles.css";
 import SimpleButton from '../components/Button/SimpleButton.vue';
 import RoundableButton from '../components/Button/RoundableButton.vue';
 import { useLoggedUser } from '../composables/useLoggedUser';
@@ -15,12 +16,14 @@ const { loggedUser } = useLoggedUser();
                     <p>No pudimos encontrar la página que buscás.</p>
                 </header>
 
-                <div>
-                    <SimpleButton v-if="!loggedUser?.id" @click="$router.push('/registro')">
+                <div v-if="!loggedUser?.id" class="error-options-single-btn">
+                    <SimpleButton @click="$router.push('/registro')">
                         Ir a la página de inicio
                     </SimpleButton>
+                </div>
 
-                    <SimpleButton v-else @click="$router.push('/')">
+                <div v-else>
+                    <SimpleButton @click="$router.push('/')">
                         Ir a "Mis Tareas"
                     </SimpleButton>
 
